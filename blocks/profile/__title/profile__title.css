@@ -1,0 +1,7 @@
+.profile__title {
+  max-width: calc(100% - 19px * 2);
+  display: flex;
+  flex-flow: row;
+  align-items: baseline;
+  justify-content: space-between;
+}

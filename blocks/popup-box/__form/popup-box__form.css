@@ -1,0 +1,8 @@
+.popup-box__form {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  padding: 0;
+  margin: 0;
+  border: none;
+}

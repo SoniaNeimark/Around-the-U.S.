@@ -1,0 +1,6 @@
+.popup-box__content {
+  width: calc(100% - 22px * 2);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}

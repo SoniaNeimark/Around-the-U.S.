@@ -9,12 +9,39 @@
 <body class="page">
   <div class="page__content">
     <header class="header">
-      <hr>
-
+      <img class="logo logo_place_header" src="images/logo/logo.svg" alt="Project logo">
+      <hr class="header__line">
     </header>
+
     <main class="main-content">
       <section class="profile">
+        <img class="profile__image" src="images/profile/profile_image.png" alt="Jacques Cousteau">
+        <div class="profile__title">
+          <h1 class="profile__name">Jacques Cousteau</h1>
+          <img class="profile__edit-button" src="images/svg/edit.svg" alt="Edit button">
+        </div>
+        <p class="profile__profession">Explorer</p>
+        <button class="add-button" type="button"><img class="add-button__icon" src="images/svg/add.svg" alt="Add button"></button>
+        <div class="popup-box popup-box_display_none">
+          <img class="popup-box__close-button" src="images/svg/close.svg" alt="Close button">
+          <div class="popup-box__container">
+            <div class="popup-box__content">
+              <h2 class="popup-box__heading">Edit profile</h2>
+              <fieldset class="popup-box__form">
+                <input type="text" class="popup-box__item popup-box__item_type_name" id="name" name="name" placeholder="Name">
+                <hr class="popup-box__line">
+                <input type="text" class="popup-box__item popup-box__item_type_profession" id="profession" name="profession" placeholder="About me">
+                <hr class="popup-box__line">
+                <input type="button" class="save-button" value="Save">
+              </fieldset>
+            </div>
+            <div class="popup-box__overlay">
+            </div>
+          </div>
+        </div>
       </section>
+
+
 
       <section class="elements">
       </section>

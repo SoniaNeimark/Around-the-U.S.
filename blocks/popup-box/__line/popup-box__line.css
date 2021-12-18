@@ -1,0 +1,6 @@
+.popup-box__line {
+  width: 100%;
+  opacity: 0.2;
+  border-top: 1px solid #000000;
+  margin: 0;
+}

@@ -1,0 +1,11 @@
+.popup-box {
+  width: calc(100% - 19px * 2);
+  position: fixed;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-items: center;
+  z-index: 1;
+}

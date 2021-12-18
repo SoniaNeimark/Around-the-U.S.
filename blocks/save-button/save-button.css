@@ -1,0 +1,15 @@
+.save-button {
+  width: 238px;
+  height: 46px;
+  background: #000000;
+  border: none;
+  border-radius: 2px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.25;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 46px auto 25px auto;
+
+}
