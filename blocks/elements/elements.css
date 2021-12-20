@@ -1,0 +1,8 @@
+.elements {
+  max-width: 282px;
+  padding: 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin: 36px auto 0 auto;
+}

@@ -1,15 +1,19 @@
 .save-button {
   width: 238px;
   height: 46px;
-  background: #000000;
-  border: none;
+  /*background: #000000;*/
+  background: #FFFFFF;
+  /*border: none;*/
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 2px;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 1.25;
   text-align: center;
-  color: #FFFFFF;
+  /*color: #FFFFFF;*/
+  color: rgba(0, 0, 0, 0.5);
   margin: 46px auto 25px auto;
+  cursor: default;
 
 }

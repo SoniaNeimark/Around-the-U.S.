@@ -1,7 +1,7 @@
 .page__content {
   width: 100%;
   margin: 0 auto;
-  display: flex;
+  /*display: flex;
   flex-flow: column;
-  align-items: center;
+  align-items: center;*/
 }

@@ -1,5 +1,8 @@
 .popup-box__close-button {
   width: 26px;
+  justify-self: start;
   align-self: flex-end;
+  transform: translate(22px, calc(-100% - 13.02px));
   margin-bottom: 13.62px;
+  cursor: pointer;
 }

@@ -1,0 +1,9 @@
+.elements__cards {
+  list-style: none;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}

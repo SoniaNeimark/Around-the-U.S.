@@ -1,0 +1,19 @@
+.elements__title {
+  /*margin-top: 24px;
+  display: grid;
+  grid-template-columns: auto max-content;
+  grid-template-rows: 1fr;*/
+  /*display: flex;
+  justify-content: space-between;
+  align-items: baseline;*/
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  grid-area: elements__title;
+  margin-left: 21px;
+}
