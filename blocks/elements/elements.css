@@ -4,5 +4,23 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin: 36px auto 0 auto;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 624px) {
+  .elements {
+    max-width: 584px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .elements {
+    max-width: 880px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .elements {
+    max-width: 100%;
+  }
 }

@@ -1,6 +1,5 @@
 .elements__like {
   width: 21px;
-  /*display: inline-flex;*/
   margin-right: 15px;
   grid-area: elements__like;
   align-self: center;

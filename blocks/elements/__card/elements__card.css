@@ -1,10 +1,6 @@
 .elements__card {
-  width: 288px;
-  /*object-fit: cover;*/
+  width: 282px;
   margin: 0 auto 20px auto;
-  /*display: flex;
-  flex-flow: column;
-  align-items: center;*/
   display: grid;
   grid-template-columns: auto min-content;
   grid-template-rows: auto auto;
@@ -14,4 +10,17 @@
   background: #FFFFFF;
   border-radius: 10px;
   padding: 0;
+}
+
+@media screen and (min-width: 624px) {
+  .elements__card {
+    margin: 0;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .elements__card {
+    max-width: 100%;
+  }
 }

@@ -1,16 +1,18 @@
-# Project 4: Around The U.S.
+# Around The U.S.
 
 ### Overview
 
-* Figma
-* Images
+* About
+* Technical Details
+* Link
 
-**Figma**
+## About
 
-* [Link to the project in Figma](https://www.figma.com/file/SurN1jaeEQIhuZEDMhmWWf/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+This is my fourth web project created within [Practicum100](https://practicum.yandex.com) program by [Yandex](https://www.yandex.com)
 
-**Images**
+## Technical Details
 
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
+The project is created by using __HTML__,  __CSS__ and __JavaScript__ and its structure is based on __BEM__ methodology. A combination of responsive and adaptive layouts is applied in order to make it look nice and display correctly on various screen sizes. I did my best to make it fit the design provided by [Practicum100](https://practicum.yandex.com) in [Figma](https://www.figma.com/).
 
-Have fun with JavaScript!
+## Link
+

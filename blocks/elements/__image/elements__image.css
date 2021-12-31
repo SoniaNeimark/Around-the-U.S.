@@ -1,8 +1,13 @@
 .elements__image {
-  width: 288px;
+  width: 282px;
   object-fit: cover;
   grid-area: elements__image;
   grid-column: 1 / span 2;
+}
 
-  /*object-fit: cover;*/
+@media screen and (max-width: 320px) {
+  .elements__image {
+    width: 100%;
+  }
+
 }
