@@ -9,20 +9,20 @@
 <body class="page">
   <div class="page__content">
     <header class="header">
-      <img class="logo logo_place_header" src="images/logo/logo.svg" alt="Project logo">
+      <img class="logo" src="images/logo/logo.svg" alt="Project logo">
     </header>
 
     <main class="main-content">
       <section class="profile">
         <img class="profile__image" src="images/profile/profile_image.png" alt="Jacques Cousteau">
-        <article class="profile__info">
+        <div class="profile__info">
           <div class="profile__title">
             <h1 class="profile__name">Jacques Cousteau</h1>
-            <img class="profile__edit-button hover-opacity" src="images/svg/edit.svg" alt="Edit button">
+            <button class="edit-button hover-opacity" type="button"><img class="edit-button__icon hover-opacity" src="images/svg/edit.svg" alt="Edit button"></button>
           </div>
           <p class="profile__profession">Explorer</p>
-        </article>
-        <button class="add-button add-button_place_profile hover-opacity" type="button"><img class="add-button__icon hover-opacity" src="images/svg/add_close.svg" alt="Add button"></button>
+        </div>
+        <button class="add-button hover-opacity" type="button"><img class="add-button__icon" src="images/svg/add_close.svg" alt="Add button"></button>
       </section>
 
       <section class="elements">
@@ -30,51 +30,54 @@
           <li class="elements__card">
             <img class="elements__image" src="images/elements/Yosemite_Valley.png" alt="Forest river">
             <h2 class="elements__title">Yosemite Valley</h2>
-            <img class="elements__like hover-opacity hover-opacity_like" src="images/svg/like.svg" alt="like button">
+            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
           </li>
 
           <li class="elements__card">
             <img class="elements__image" src="images/elements/Lake_Louise.png" alt="Mountain lake">
             <h2 class="elements__title">Lake Louise</h2>
-            <img class="elements__like hover-opacity hover-opacity_like" src="images/svg/like.svg" alt="like button">
+            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
           </li>
 
           <li class="elements__card">
             <img class="elements__image" src="images/elements/Bald_Mountains.png" alt="Sunrise in the mountains">
             <h2 class="elements__title">Bald Mountains</h2>
-            <img class="elements__like hover-opacity hover-opacity_like" src="images/svg/like.svg" alt="like button">
+            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
           </li>
 
           <li class="elements__card">
             <img class="elements__image" src="images/elements/Latemar.png" alt="Night sky with stars over the mountains">
             <h2 class="elements__title">Latemar</h2>
-            <img class="elements__like hover-opacity hover-opacity_like" src="images/svg/like.svg" alt="like button">
+            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
           </li>
 
           <li class="elements__card">
             <img class="elements__image" src="images/elements/Vanoise_National_Park.png" alt="Mountain lake">
             <h2 class="elements__title">Vanoise National Park</h2>
-            <img class="elements__like hover-opacity hover-opacity_like" src="images/svg/like.svg" alt="like button">
+            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
           </li>
 
           <li class="elements__card">
             <img class="elements__image" src="images/elements/Lago_di_Braies.png" alt="Mountain lake harbor with boats">
             <h2 class="elements__title">Lago di Braies</h2>
-            <img class="elements__like hover-opacity hover-opacity_like" src="images/svg/like.svg" alt="like button">
+            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
           </li>
 
         </ul>
       </section>
 
       <div class="popup-box">
-        <form class="popup-box__container">
-          <fieldset class="popup-box__content">
-            <legend class="popup-box__title">Edit profile<span><img class="popup-box__close-button" src="images/svg/add_close.svg" alt="Close button"></span></legend>
+        <div class="popup-box__container">
+          <form class="popup-box__content" name="profile-form">
+            <div class="popup-box__heading">
+              <h2 class="popup-box__title">Edit profile</h2>
+              <button class="close-button hover-opacity" type="button"><img class="close-button__icon" src="images/svg/add_close.svg" alt="Close button"></button>
+            </div>
             <input class="popup-box__item popup-box__item_type_name" type="text" name="name" placeholder="Name">
             <input class="popup-box__item popup-box__item_type_profession" type="text" name="profession" placeholder="About me">
-            <input class="save-button save-button_info_profile" type="submit" value="Save">
-          </fieldset>
-        </form>
+            <input class="save-button" type="submit" value="Save">
+          </form>
+        </div>
       </div>
     </main>
 

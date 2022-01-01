@@ -1,0 +1,12 @@
+.like-button {
+  width: 21px;
+  border: none;
+  background-color: transparent;
+  margin-right: 15px;
+  grid-area: elements__like;
+  align-self: center;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

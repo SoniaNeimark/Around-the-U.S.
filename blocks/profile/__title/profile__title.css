@@ -2,7 +2,7 @@
   max-width: calc(100% - 19px * 2);
   display: flex;
   flex-flow: row;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
 }
 

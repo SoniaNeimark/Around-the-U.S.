@@ -6,6 +6,8 @@
   line-height: 29px;
   color: #000000;
   grid-area: elements__title;
+  margin-top: 25px;
+  margin-bottom: 31px;
   margin-left: 21px;
   text-overflow: ellipsis;
   white-space: nowrap;

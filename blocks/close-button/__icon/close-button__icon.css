@@ -1,0 +1,11 @@
+.close-button__icon {
+  width: 26px;
+  height: 26px;
+}
+
+@media screen and (min-width: 1024px) {
+  .close-button__icon {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -8,14 +8,14 @@
 
 @media screen and (min-width: 1024px) {
   .profile {
-    max-width: 880px;
+    max-width: 100%;
     display: grid;
-    grid-template-columns: 120px max-content auto;
+    grid-template-columns: 120px auto 150px;
     grid-template-rows: auto max-content auto;
     grid-column-gap: 27.5px;
     grid-template-areas:
     "profile__image . ."
-    "profile__image profile__info add-button_place_profile"
+    "profile__image profile__info add-button"
     "profile__image . .";
   }
 }

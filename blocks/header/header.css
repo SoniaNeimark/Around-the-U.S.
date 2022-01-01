@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  margin: 0 auto 42px auto;
+  margin: 28px auto 42px auto;
   display: flex;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
@@ -8,6 +8,7 @@
 @media screen and (min-width: 624px) {
   .header {
     max-width: 584px;
+    margin-top: 45px;
   }
 
 }

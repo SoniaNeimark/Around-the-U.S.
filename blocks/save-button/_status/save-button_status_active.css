@@ -1,11 +1,11 @@
 .save-button_status_active {
-  background: rgba(0, 0, 0, 1);
+  background-color: rgba(0, 0, 0, 1);
   border: 1px solid rgba(0, 0, 0, 1);
   color: rgba(255, 255, 255, 1);
-  transition: background 1s linear;
+  transition: background-color 1s linear;
 }
 
 .save-button_status_active:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   cursor: pointer;
 }

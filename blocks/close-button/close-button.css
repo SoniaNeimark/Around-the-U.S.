@@ -1,0 +1,22 @@
+.close-button {
+    width: 26px;
+    height: 26px;
+    transform: translate(50%, calc(-100% - 13px)) rotate(45deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    box-sizing: content-box;
+    padding: 0;
+    object-fit: contain;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .close-button {
+      width: 40px;
+      height: 40px;
+      transform: translate(calc(100% + 36px), -100%) rotate(45deg);
+    }
+  }
