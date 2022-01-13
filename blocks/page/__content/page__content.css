@@ -17,9 +17,9 @@
 
 }
 
-@media screen and (max-width: 319px) {
+/*media screen and (max-width: 319px) {
   .page__content {
     width: calc(100% - 19px * 2);
   }
 
-}
+}*/

@@ -18,13 +18,18 @@
 @import url(../blocks/add-button/add-button.css);
 @import url(../blocks/add-button/__icon/add-button__icon.css);
 @import url(../blocks/popup-box/popup-box.css);
+@import url(../blocks/fade-in/fade-in.css);
+@import url(../blocks/fade-out/fade-out.css);
 @import url(../blocks/popup-box/_opened/popup-box_opened.css);
 @import url(../blocks/popup-box/__container/popup-box__container.css);
+@import url(../blocks/popup-box/__wrapper/popup-box__wrapper.css);
 @import url(../blocks/popup-box/__content/popup-box__content.css);
 @import url(../blocks/popup-box/__heading/popup-box__heading.css);
+@import url(../blocks/popup-box/__image/popup-box__image.css);
+@import url(../blocks/popup-box/__subtitle/popup-box__subtitle.css);
 @import url(../blocks/popup-box/__title/popup-box__title.css);
 @import url(../blocks/close-button/close-button.css);
-@import url(../blocks/close-button/__icon/close-button__icon.css);
+@import url(../blocks/close-button/_place/close-button_place_image.css);
 @import url(../blocks/popup-box/__item/popup-box__item.css);
 @import url(../blocks/save-button/save-button.css);
 @import url(../blocks/save-button/_status/save-button_status_active.css);
@@ -36,5 +41,6 @@
 @import url(../blocks/elements/__name/elements__name.css);
 @import url(../blocks/like-button/like-button.css);
 @import url(../blocks/like-button/_status/like-button_status_active.css);
+@import url(../blocks/delete-button/delete-button.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);

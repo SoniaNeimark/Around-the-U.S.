@@ -1,12 +1,14 @@
 .like-button {
-  width: 21px;
+  width: 22px;
+  height: 19px;
   border: none;
   background-color: transparent;
-  margin-right: 15px;
+  background-image: url(../../images/svg/like.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
   grid-area: elements__like;
   align-self: center;
-  justify-self: flex-end;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-self: flex-start;
 }

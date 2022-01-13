@@ -18,65 +18,52 @@
         <div class="profile__info">
           <div class="profile__title">
             <h1 class="profile__name">Jacques Cousteau</h1>
-            <button class="edit-button hover-opacity" type="button"><img class="edit-button__icon" src="images/svg/edit.svg" alt="Edit button"></button>
+            <button class="edit-button hover-opacity open-form" type="button"><img class="edit-button__icon" src="images/svg/edit.svg" alt="Edit button"></button>
           </div>
           <p class="profile__profession">Explorer</p>
         </div>
-        <button class="add-button hover-opacity" type="button"><img class="add-button__icon" src="images/svg/add_close.svg" alt="Add button"></button>
+        <button class="add-button hover-opacity open-form" type="button"><img class="add-button__icon" src="images/svg/add_close.svg" alt="Add button"></button>
       </section>
 
       <section class="elements">
         <ul class="elements__cards">
-          <li class="elements__card">
-            <img class="elements__image" src="images/elements/Yosemite_Valley.png" alt="Forest river">
-            <h2 class="elements__title">Yosemite Valley</h2>
-            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
-          </li>
-
-          <li class="elements__card">
-            <img class="elements__image" src="images/elements/Lake_Louise.png" alt="Mountain lake">
-            <h2 class="elements__title">Lake Louise</h2>
-            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
-          </li>
-
-          <li class="elements__card">
-            <img class="elements__image" src="images/elements/Bald_Mountains.png" alt="Sunrise in the mountains">
-            <h2 class="elements__title">Bald Mountains</h2>
-            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
-          </li>
-
-          <li class="elements__card">
-            <img class="elements__image" src="images/elements/Latemar.png" alt="Night sky with stars over the mountains">
-            <h2 class="elements__title">Latemar</h2>
-            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
-          </li>
-
-          <li class="elements__card">
-            <img class="elements__image" src="images/elements/Vanoise_National_Park.png" alt="Mountain lake">
-            <h2 class="elements__title">Vanoise National Park</h2>
-            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
-          </li>
-
-          <li class="elements__card">
-            <img class="elements__image" src="images/elements/Lago_di_Braies.png" alt="Mountain lake harbor with boats">
-            <h2 class="elements__title">Lago di Braies</h2>
-            <button class="like-button hover-opacity hover-opacity_button_like" type="button"><img class="like-button__icon" src="images/svg/like.svg" alt="like button"></button>
-          </li>
-
         </ul>
       </section>
 
-      <div class="popup-box">
+      <div class="popup-box popup-box_edit-profile" id="edit">
         <div class="popup-box__container">
           <form class="popup-box__content" name="profile-form">
             <div class="popup-box__heading">
               <h2 class="popup-box__title">Edit profile</h2>
-              <button class="close-button hover-opacity" type="button"><img class="close-button__icon" src="images/svg/add_close.svg" alt="Close button"></button>
+              <button class="close-button close-button_edit-profile hover-opacity" type="button"></button>
             </div>
-            <input class="popup-box__item popup-box__item_type_name" type="text" name="name" placeholder="Name">
-            <input class="popup-box__item popup-box__item_type_profession" type="text" name="profession" placeholder="About me">
-            <input class="save-button" type="submit" value="Save">
+            <input class="popup-box__item popup-box__item_type_name" type="text" name="user-name" placeholder="Name">
+            <input class="popup-box__item popup-box__item_type_job" type="text" name="user-info" placeholder="About me">
+            <input class="save-button save-button_edit-profile" type="submit" value="Save">
           </form>
+        </div>
+      </div>
+
+
+      <div class="popup-box popup-box_add-card" id="add">
+        <div class="popup-box__container">
+          <form class="popup-box__content" name="card-form">
+            <div class="popup-box__heading">
+              <h2 class="popup-box__title">New place</h2>
+              <button class="close-button close-button_add-card hover-opacity" type="button"></button>
+            </div>
+            <input class="popup-box__item popup-box__item_type_title" type="text" name="card-title" placeholder="Title">
+            <input class="popup-box__item popup-box__item_type_link" type="text" name="card-link" placeholder="Image link">
+            <input class="save-button save-button_add-card" type="submit" value="Create">
+          </form>
+        </div>
+      </div>
+
+      <div class="popup-box popup-box_image">
+        <div class="popup-box__wrapper">
+          <button class="close-button hover-opacity close-button_place_image" type="button"></button>
+          <img class="popup-box__image" src="#" alt="#">
+          <p class="popup-box__subtitle">Test</p>
         </div>
       </div>
     </main>
@@ -85,6 +72,15 @@
       <p class="footer__copyright">&copy; 2021 Around The U.S.</p>
     </footer>
   </div>
-  <script src="scripts/script.js"></script>
+
+  <template id="elements__card">
+    <li class="elements__card">
+      <button class="elements__image hover-opacity" type="button"></button>
+      <h2 class="elements__title"></h2>
+      <button class="like-button hover-opacity hover-opacity_button_like" type="button"></button>
+      <button class="delete-button hover-opacity" type="button"></button>
+    </li>
+  </template>
+  <script src="scripts/index.js"></script>
 </body>
 </html>
