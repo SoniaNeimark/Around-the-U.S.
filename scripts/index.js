@@ -29,10 +29,12 @@ const buttonEditProfile = sectionProfile.querySelector(".edit-button");// profil
 const buttonAddCard = sectionProfile.querySelector(".add-button");// profile Add <button>
 
 // Arrays && nodelists
-//// Buttons
-const buttonsClose = document.querySelectorAll(".close-button");// Document's Close buttons
+//// Popups
+const popupBoxes = document.querySelectorAll(".popup-box");// Popups
 //// Input fields
 const inputFields = document.querySelectorAll(".popup-box__item")// Popups' input fields
+//// Buttons
+const buttonsClose = document.querySelectorAll(".close-button");// Document's Close buttons
 //// Other
 const initialCards = [
   {
@@ -62,31 +64,45 @@ const initialCards = [
 ];// Array of images for default cards
 
 // Functions
-//// Self-invoked Functions
-(function addDefaultCards() {
+//// Kind of self-invoked Functions
+function addDefaultCards() {
   initialCards.forEach(function(card) {
     const newCard = createCard(card.name, card.link);// New card from template
     allCards.append(newCard);
   });
-})();//Create 6 default cards from initialCards array and add them to Cards gallery
+};
+addDefaultCards();//Create 6 default cards from initialCards array and add them to Cards gallery
 
-(function setInputEditProfile() {
+function setInputEditProfile() {
   userNameToSet.value = userNameSet.textContent;
   userJobToSet.value = userJobSet.textContent;
-})();// Assign default values to popup-edit-profile form input fields
+};
+setInputEditProfile();// Assign default values to popup-edit-profile form input fields
 
-(function closePopupsOnClick() {
+function closePopupsOnClick() {
   buttonsClose.forEach(function(button) {
     button.addEventListener("click", function() {handleButtonClose(button)});
   });
-}());// Listen to popup Close button handlers on-click for all popup Close buttons (close popup on-click)
+};
+closePopupsOnClick();// Listen to popup Close button handlers on-click for all popup Close buttons (close popup on-click)
 
-(function setSaveButtonsStatusOnInput() {
+function setSaveButtonsStatusOnInput() {
   inputFields.forEach(function (field) {
-    const parent = field.parentElement;
+    const parent = field.closest(".popup-box__content");
     field.addEventListener("input", function() {checkInputsToSubmit(parent)});
   });
-}());// Listen to check forms inputFields values handlers on-input to set forms Submit button status (set form Submit button status on-input)
+};
+setSaveButtonsStatusOnInput();// Listen to check forms inputFields values handlers on-input to set forms Submit button status (set form Submit button status on-input)
+
+function handlePopupAnimation() {
+  popupBoxes.forEach(function(popupBox) {
+    popupBox.addEventListener("animationend", function() {
+      if (popupBox.classList.contains("fade-out")) {
+      popupBox.classList.remove("popup-box_opened")}
+    });
+  });
+};
+handlePopupAnimation();
 
 //// Reusable Functions
 ////// CreateCard function
@@ -102,7 +118,7 @@ function createCard(name, link) {
   cardImage.addEventListener("click", function(evt) {
     const image = popupImage.querySelector(".popup-box__image");// Image-preview image
     const subtitle = popupImage.querySelector(".popup-box__subtitle");// Image-preview subtitle
-    const subtitleInfo = evt.target.parentElement.querySelector(".elements__title").textContent;
+    const subtitleInfo = evt.target.closest(".elements__card").querySelector(".elements__title").textContent;
     subtitle.textContent = subtitleInfo;
     image.setAttribute("src", `${cardLink}`);
     image.setAttribute("alt", `${subtitleInfo}`);
@@ -126,10 +142,6 @@ function togglePopup(popup) {
   } else {
     popup.classList.remove("fade-in");
     popup.classList.add("fade-out");
-    popup.addEventListener("animationend", function() {
-      if (popup.classList.contains("fade-out")) {
-      popup.classList.remove("popup-box_opened")}
-    });
   };
 };//Toggle smoothly popup display property when called (open or close popup)
 
@@ -168,14 +180,12 @@ function deactivateSaveButton(form) {
 //// Button and form handlers
 ////// Reusable button and form handlers
 function handleButtonClose(button) {
-  const parent = button.parentElement;
-  const grandParent = parent.parentElement;
-  const greatGrandParent = grandParent.parentElement;
-  button.classList.contains("close-button_place_image") ? togglePopup(grandParent) : togglePopup(greatGrandParent.parentElement);
+  const parent = button.closest(".popup-box");
+  togglePopup(parent);
 };// Handle element Close button (close the button's grandParent or greatGrandParent Element)
 
 function handleButtonDelete(button) {
-  const parent = button.parentElement;
+  const parent = button.closest(".elements__card");
   parent.remove();
 };//Handle delete-buttons (delete parentElement)
 
