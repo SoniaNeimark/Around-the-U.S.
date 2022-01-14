@@ -1,28 +1,39 @@
-//Wrappers for popups
-const popupBoxEditProfile = document.querySelector(".popup-box_edit-profile");// Profile-edit form popup-box
-const popupBoxAddCard = document.querySelector(".popup-box_add-card");// Add-card form popup-box
+// Profile section
+//// Profile section Wrapper
+const sectionProfile = document.querySelector(".profile")//Profile. <section> element
+////// Profile section Elements
+const userNameSet = document.querySelector(".profile__name");//User name <h1> Editable. Displays submitted data from profile-edit form.
+const userJobSet = document.querySelector(".profile__profession");//User job <p>. Editable. Displays submitted data from profile-edit form.
 
-//formElements
-const formElementEditProfile = popupBoxEditProfile.querySelector(".popup-box__content");
-const formElementAddCard = popupBoxAddCard.querySelector(".popup-box__content");
-
-//Main page default display
-const userNameSet = document.querySelector(".profile__name");//User name. Editable. Displays submitted data from profile-edit form.
-const userJobSet = document.querySelector(".profile__profession");//User job. Editable. Displays submitted data from profile-edit form.
-
-//Form input fields
-const userNameToSet = document.querySelector(".popup-box__item_type_name");// Name
-const userJobToSet = document.querySelector(".popup-box__item_type_job");// About me
-const cardNameToSet = document.querySelector(".popup-box__item_type_title");// Title
-const cardLinkToSet = document.querySelector(".popup-box__item_type_link");// Image link
-
-//Cards
+// Elements section
+//// Elements section Wrapper
 const allCards = document.querySelector(".elements__cards");// Cards gallery, <ul> element to which default and new cards can be added.
+////// Elements section Card Template
+const cardTemplate = document.querySelector("#elements__card")// Card <template> for cards to be added
 
-//Arrays && nodelists
-const buttonsOpen = document.querySelectorAll(".open-form");// Popup Open buttons
+// Popup forms
+//// Form wrappers
+const popupEditProfile = document.querySelector(".popup-box_edit-profile");// <div> Profile-edit form popup-box wrapper
+const popupAddCard = document.querySelector(".popup-box_add-card");// <div> Add-card form popup-box wrapper
+const popupImage = document.querySelector(".popup-box_image");// <div> Image-preview popup-box wrapper
+////// Forms
+const formEditProfile = popupEditProfile.querySelector(".popup-box__content");//Profile-edit <form> element
+const formAddCard = popupAddCard.querySelector(".popup-box__content");//Add-card <form> element
+//////// Form Input fields
+const userNameToSet = document.querySelector(".popup-box__item_type_name");// Name <input>
+const userJobToSet = document.querySelector(".popup-box__item_type_job");// About me <input>
+const cardTitleToSet = document.querySelector(".popup-box__item_type_title");// Title <input>
+const cardLinkToSet = document.querySelector(".popup-box__item_type_link");// Image link <input>
+//////// Form input buttons
+const buttonEditProfile = sectionProfile.querySelector(".edit-button");// profile Edit <button>
+const buttonAddCard = sectionProfile.querySelector(".add-button");// profile Add <button>
+
+// Arrays && nodelists
+//// Buttons
 const buttonsClose = document.querySelectorAll(".close-button");// Document's Close buttons
-const inputFields = document.querySelectorAll(".popup-box__item")// Popup input fields
+//// Input fields
+const inputFields = document.querySelectorAll(".popup-box__item")// Popups' input fields
+//// Other
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -51,98 +62,63 @@ const initialCards = [
 ];// Array of images for default cards
 
 // Functions
-////createCards
+//// Self-invoked Functions
+(function addDefaultCards() {
+  initialCards.forEach(function(card) {
+    const newCard = createCard(card.name, card.link);// New card from template
+    allCards.append(newCard);
+  });
+})();//Create 6 default cards from initialCards array and add them to Cards gallery
+
+(function setInputEditProfile() {
+  userNameToSet.value = userNameSet.textContent;
+  userJobToSet.value = userJobSet.textContent;
+})();// Assign default values to popup-edit-profile form input fields
+
+(function closePopupsOnClick() {
+  buttonsClose.forEach(function(button) {
+    button.addEventListener("click", function() {handleButtonClose(button)});
+  });
+}());// Listen to popup Close button handlers on-click for all popup Close buttons (close popup on-click)
+
+(function setSaveButtonsStatusOnInput() {
+  inputFields.forEach(function (field) {
+    const parent = field.parentElement;
+    field.addEventListener("input", function() {checkInputsToSubmit(parent)});
+  });
+}());// Listen to check forms inputFields values handlers on-input to set forms Submit button status (set form Submit button status on-input)
+
+//// Reusable Functions
+////// CreateCard function
 function createCard(name, link) {
-  const cardTemplate = document.querySelector("#elements__card")// Card template
   const cardReady = cardTemplate.content.cloneNode(true);// New card from template
   const cardLink = link;// Img src info
   const cardName = name;// Card title info
   const cardTitle = cardReady.querySelector(".elements__title"); // Card title in the layout
   cardTitle.textContent = cardName;
   const cardImage = cardReady.querySelector(".elements__image"); // Card image in the layout.
-  cardImage.setAttribute("style", `background-image: url("${cardLink}");`); // placing image to the card layout
+  cardImage.setAttribute("style", `background-image: url("${cardLink}");`); // Place image to the card layout
 
-  const popupBoxImage = document.querySelector(".popup-box_image");// Image-preview popup-box
   cardImage.addEventListener("click", function(evt) {
-    const popupImage = popupBoxImage.querySelector(".popup-box__image");// Image-preview image
-    const subtitle = popupBoxImage.querySelector(".popup-box__subtitle");// Image-preview subtitle
+    const image = popupImage.querySelector(".popup-box__image");// Image-preview image
+    const subtitle = popupImage.querySelector(".popup-box__subtitle");// Image-preview subtitle
     const subtitleInfo = evt.target.parentElement.querySelector(".elements__title").textContent;
     subtitle.textContent = subtitleInfo;
-    popupImage.setAttribute("src", `${cardLink}`);
-    popupImage.setAttribute("alt", `${subtitleInfo}`);
-    togglePopup(popupBoxImage);
+    image.setAttribute("src", `${cardLink}`);
+    image.setAttribute("alt", `${subtitleInfo}`);
+    togglePopup(popupImage);
   });// Handle clickable image. Open popup-box with its parent image when clicked.
 
-  const buttonDelete = cardReady.querySelector(".delete-button"); // Card delete-button
-  buttonDelete.addEventListener("click", function () {handleButtonDelete(buttonDelete)});
+  const buttonDelete = cardReady.querySelector(".delete-button");// Card delete-button
+  buttonDelete.addEventListener("click", function () {handleButtonDelete(buttonDelete)});// Call Card delete-button handler on-click
 
-  const buttonLike = cardReady.querySelector(".like-button");  // Card like-button
-  buttonLike.addEventListener("click", function () {handleButtonLike(buttonLike)});
+  const buttonLike = cardReady.querySelector(".like-button");// Card like-button
+  buttonLike.addEventListener("click", function () {toggleButtonLike(buttonLike)});// Call Card like-button handler on-click
 
   return cardReady;
-};//Create new card from template ready to be added to Cards gallery called
+};//Create new card from template ready to be added to Cards gallery when called
 
-function addDefaultCards() {
-  initialCards.forEach(function(card) {
-    const newCard = createCard(card.name, card.link);// New card from template
-    allCards.append(newCard);
-  });
-};
-addDefaultCards();//Create 6 default cards from initialCards array && add them to Cards gallery called
-
-////Button and form handlers
-function handleButtonOpen(button) {
-  if (button.classList.contains("edit-button")) {
-    togglePopup(popupBoxEditProfile);
-    setFormsInputFields();
-    checkInputFields(popupBoxEditProfile);
-  } else {
-    togglePopup(popupBoxAddCard);
-    setFormsInputFields();
-    checkInputFields(popupBoxAddCard);
-  };
-  //setFormsInputFields();
-};// Handle open-button openning popup form
-
-function handleButtonClose(button) {
-  const parent = button.parentElement;
-  const grandParent = parent.parentElement;
-  const greatGrandParent = grandParent.parentElement;
-  button.classList.contains("close-button_place_image") ? togglePopup(grandParent) : togglePopup(greatGrandParent.parentElement);
-};// Handle popup Close button
-
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  userNameSet.textContent = userNameToSet.value;
-  userJobSet.textContent = userJobToSet.value;
-  checkInputFields(popupBoxEditProfile);
-  togglePopup(popupBoxEditProfile);
-};// Handle submit form to edit profile
-
-function handleElementAddCard(evt) {
-  evt.preventDefault();
-  const name = cardNameToSet.value // Title field input field value
-  const link = cardLinkToSet.value // Image link input value
-  const newcard = createCard(name, link);// New card from the input data
-  allCards.prepend(newcard);
-  togglePopup(popupBoxAddCard);
-}; //Handle submit form to create a new card and add it to the gallery
-
-function handleButtonDelete(button) {
-  button.parentElement.remove();
-};//Handle delete-buttons
-
-function handleButtonLike(button) {
-  if (!button.classList.contains("like-button_status_active")) {
-    button.classList.add("like-button_status_active");
-    button.classList.remove("hover-opacity", "hover-opacity_button_like");
-  } else {
-    button.classList.remove("like-button_status_active");
-    button.classList.add("hover-opacity", "hover-opacity_button_like");
-  }
-};// Handle like-buttons
-
-////Other functions
+////// Other Reusable Functions
 function togglePopup(popup) {
   if (!popup.classList.contains("popup-box_opened")) {
     popup.classList.remove("fade-out");
@@ -155,16 +131,16 @@ function togglePopup(popup) {
       popup.classList.remove("popup-box_opened")}
     });
   };
-};//Toggle smoothly popup-box display property when called
+};//Toggle smoothly popup display property when called (open or close popup)
 
-function setFormsInputFields() {
-  userNameToSet.value = userNameSet.textContent;
-  userJobToSet.value = userJobSet.textContent;
-  cardNameToSet.value = "";
-  cardLinkToSet.value = "";
-};// Assign values to popup forms input fields
+function clearFields(form) {
+  const fields = form.querySelectorAll(".popup-box__item");
+  fields.forEach(function(field){
+    field.value = "";
+  });
+};// Clear popup form input fields
 
-function checkInputFields(form) {
+function checkInputsToSubmit(form) {
   activateSaveButton(form);
   const fields = form.querySelectorAll(".popup-box__item");
   function checkField() {
@@ -175,45 +151,76 @@ function checkInputFields(form) {
     });
   };
   checkField();
-};
+};// Check popup form's input fields && set popup-form's Submit button status
 
 function activateSaveButton(form) {
-  const saveButton = form.querySelector(".save-button");// Form Submit button
+  const saveButton = form.querySelector(".save-button");// Form's Submit button
   saveButton.classList.add("save-button_status_active");
   saveButton.removeAttribute("disabled", true);
-};// Activate Submit button
-//activateSaveButton();
+};// Activate popup-form's Submit button
 
 function deactivateSaveButton(form) {
-  const saveButton = form.querySelector(".save-button");// Form Submit button
+  const saveButton = form.querySelector(".save-button");// Form's Submit button
   saveButton.classList.remove("save-button_status_active");
   saveButton.setAttribute("disabled", true);
-};// Deactivate Submit button
+};// Deactivate popup-form's Submit button
+
+//// Button and form handlers
+////// Reusable button and form handlers
+function handleButtonClose(button) {
+  const parent = button.parentElement;
+  const grandParent = parent.parentElement;
+  const greatGrandParent = grandParent.parentElement;
+  button.classList.contains("close-button_place_image") ? togglePopup(grandParent) : togglePopup(greatGrandParent.parentElement);
+};// Handle element Close button (close the button's grandParent or greatGrandParent Element)
+
+function handleButtonDelete(button) {
+  const parent = button.parentElement;
+  parent.remove();
+};//Handle delete-buttons (delete parentElement)
+
+function toggleButtonLike(button) {
+  if (!button.classList.contains("like-button_status_active")) {
+    button.classList.add("like-button_status_active");
+    button.classList.remove("hover-opacity", "hover-opacity_button_like");
+  } else {
+    button.classList.remove("like-button_status_active");
+    button.classList.add("hover-opacity", "hover-opacity_button_like");
+  }
+};// Toggle like-buttons (like active/neutral)
+
+////// Targeted button and form handlers
+function handleButtonEditProfile() {
+    togglePopup(popupEditProfile);
+    checkInputsToSubmit(popupEditProfile);
+}; // Handle Profile Edit button openning editProfile popup form
+
+function handlButtonAddCard() {
+  togglePopup(popupAddCard);
+  clearFields(popupAddCard);
+  deactivateSaveButton(popupAddCard);
+}; // Handle Profile Add button openning addCard popup form
+
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+  userNameSet.textContent = userNameToSet.value;
+  userJobSet.textContent = userJobToSet.value;
+  checkInputsToSubmit(popupEditProfile);
+  togglePopup(popupEditProfile);
+};// Handle Submit form to edit profile
+
+function handleAddCardFormSubmit(evt) {
+  evt.preventDefault();
+  const name = cardTitleToSet.value // Title field input field value
+  const link = cardLinkToSet.value // Image link input value
+  const newcard = createCard(name, link);// New card from the input data
+  allCards.prepend(newcard);
+  togglePopup(popupAddCard);
+}; //Handle Submit form to create a new card and add it to the gallery
 
 //Event-listeners
-formElementEditProfile.addEventListener("submit", handleProfileFormSubmit);// Call handle submit form to edit profile
-formElementAddCard.addEventListener("submit", handleElementAddCard);// Call handle submit form to add a new card
-
-function handleButtonsOpen() {
-  buttonsOpen.forEach(function(button) {
-    button.addEventListener("click", function() {handleButtonOpen(button)});
-  });
-};
-handleButtonsOpen();// Call handle popup Open for all open-buttons openning popup forms
-
-function handleButtonsClose() {
-  buttonsClose.forEach(function(button) {
-    button.addEventListener("click", function() {handleButtonClose(button)});
-  });
-};
-handleButtonsClose();// Call handle popup Close button for all popup Close buttons
-
-function handleInputFields() {
-  inputFields.forEach(function (field) {
-    field.addEventListener("input", function() {checkInputFields(field.parentElement)});
-  });
-};
-handleInputFields();// Call check forms inputFields value
-
-
+formEditProfile.addEventListener("submit", handleProfileFormSubmit);// Listen editProfile popup-form submit handler (edit profile data)
+formAddCard.addEventListener("submit", handleAddCardFormSubmit);// Listen addCard popup-form submit handler (add new card)
+buttonEditProfile.addEventListener("click", handleButtonEditProfile);// Listen profile Edit button (open editProfile popup-form)
+buttonAddCard.addEventListener("click", handlButtonAddCard);// Listen profile Add button (open addCard popup-form)
 
