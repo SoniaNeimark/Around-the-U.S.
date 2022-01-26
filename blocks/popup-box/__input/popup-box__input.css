@@ -1,9 +1,9 @@
-.popup-box__item {
+.popup-box__input {
   width: 100%;
   border: none;
   margin: 0;
-  padding-bottom: 9px;
-  padding-top: 30px;
+  padding-bottom: 5px;
+  padding-top: 13px;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

@@ -1,4 +1,4 @@
-.popup-box__content {
+.popup-box__form {
   width: calc(100% - 22px * 2);
   display: flex;
   flex-flow: column;
@@ -16,7 +16,7 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .popup-box__content {
+  .popup-box__form {
     width: calc(100% - 36px * 2);
   }
 

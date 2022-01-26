@@ -1,10 +1,10 @@
 .elements__image {
   width: 282px;
   height: 282px;
-  border: none;
+  /*border: none;
   padding: 0;
-  margin: 0;
-  background-size: cover;
+  margin: 0;*/
+  /*background-size: cover;*/
   object-fit: cover;
   grid-area: elements__image;
   grid-column: 1 / span 2;

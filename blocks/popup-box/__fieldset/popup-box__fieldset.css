@@ -1,8 +1,9 @@
-.popup-box__form {
+.popup-box__fieldset {
   width: 100%;
   display: flex;
   flex-flow: column;
-  padding: 0;
+  align-items: center;
   margin: 0;
+  padding: 0;
   border: none;
 }

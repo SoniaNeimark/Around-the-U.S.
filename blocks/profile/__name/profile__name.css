@@ -10,6 +10,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  grid-area: profile__name;
 }
 
 @media screen and (min-width: 1024px) {

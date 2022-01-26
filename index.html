@@ -18,11 +18,11 @@
         <div class="profile__info">
           <div class="profile__title">
             <h1 class="profile__name">Jacques Cousteau</h1>
-            <button class="edit-button hover-opacity open-form" type="button"><img class="edit-button__icon" src="images/svg/edit.svg" alt="Edit button"></button>
+            <button class="edit-button hover-opacity open-popup" type="button"></button>
           </div>
           <p class="profile__profession">Explorer</p>
         </div>
-        <button class="add-button hover-opacity open-form" type="button"><img class="add-button__icon" src="images/svg/add_close.svg" alt="Add button"></button>
+        <button class="add-button hover-opacity open-popup" type="button"></button>
       </section>
 
       <section class="elements">
@@ -32,14 +32,18 @@
 
       <div class="popup-box popup-box_edit-profile" id="edit">
         <div class="popup-box__container">
-          <form class="popup-box__content" name="profile-form">
+          <form class="popup-box__form" name="profileForm">
             <div class="popup-box__heading">
               <h2 class="popup-box__title">Edit profile</h2>
               <button class="close-button close-button_edit-profile hover-opacity" type="button"></button>
             </div>
-            <input class="popup-box__item popup-box__item_type_name" type="text" name="user-name" placeholder="Name">
-            <input class="popup-box__item popup-box__item_type_job" type="text" name="user-info" placeholder="About me">
-            <input class="save-button save-button_edit-profile" type="submit" value="Save">
+            <fieldset class="popup-box__fieldset">
+            <input class="popup-box__input popup-box__input_type_name" type="text" name="user-name" placeholder="Name" minlength="2" maxlength="40" required>
+            <p class="popup-box__error" id="name">Please fill out this field.</p>
+            <input class="popup-box__input popup-box__input_type_job" type="text" name="user-info" placeholder="About me" minlength="2" maxlength="200" required>
+            <p class="popup-box__error" id="about">Please fill out this field.</p>
+            <button class="popup-box__button popup-box__button_edit-profile" type="submit">Save</button>
+          </fieldset>
           </form>
         </div>
       </div>
@@ -47,19 +51,23 @@
 
       <div class="popup-box popup-box_add-card" id="add">
         <div class="popup-box__container">
-          <form class="popup-box__content" name="card-form">
+          <form class="popup-box__form" name="cardForm">
             <div class="popup-box__heading">
               <h2 class="popup-box__title">New place</h2>
               <button class="close-button close-button_add-card hover-opacity" type="button"></button>
             </div>
-            <input class="popup-box__item popup-box__item_type_title" type="text" name="card-title" placeholder="Title">
-            <input class="popup-box__item popup-box__item_type_link" type="text" name="card-link" placeholder="Image link">
-            <input class="save-button save-button_add-card" type="submit" value="Create">
+            <fieldset class="popup-box__fieldset">
+            <input class="popup-box__input popup-box__input_type_title" type="text" name="card-title" placeholder="Title" required minlength="1" maxlength="30">
+            <p class="popup-box__error"  id="title">Please fill out this field.</p>
+            <input class="popup-box__input popup-box__input_type_link" type="url" name="card-link" placeholder="Image link" required>
+            <p class="popup-box__error" id="url">Please enter a web address.</p>
+            <button class="popup-box__button popup-box__button_disabled popup-box__button_add-card" type="submit" disabled>Create</button>
+          </fieldset>
           </form>
         </div>
       </div>
 
-      <div class="popup-box popup-box_image">
+      <div class="popup-box popup-box_image" id="image">
         <div class="popup-box__wrapper">
           <button class="close-button hover-opacity close-button_place_image" type="button"></button>
           <img class="popup-box__image" src="#" alt="#">
@@ -75,12 +83,13 @@
 
   <template id="elements__card">
     <li class="elements__card">
-      <button class="elements__image hover-opacity" type="button"></button>
+      <img class="elements__image hover-opacity open-popup" src="#" alt="#">
       <h2 class="elements__title"></h2>
       <button class="like-button hover-opacity hover-opacity_button_like" type="button"></button>
       <button class="delete-button hover-opacity" type="button"></button>
     </li>
   </template>
   <script src="scripts/index.js"></script>
+  <script src="scripts/validation.js"></script>
 </body>
 </html>

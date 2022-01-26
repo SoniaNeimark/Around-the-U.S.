@@ -1,3 +1,10 @@
 .popup-box_opened {
-  display: flex;
+  /*display: flex;*/
+  visibility: visible;
+  opacity: 1;
+  pointer-events: visible;
+  user-select: auto;
+  transition: visibility 0s linear 0s, opacity linear .4s;
+  /*z-index: 2;*/
+  /*transition: visibility/* 0ms linear 1ms*//*, opacity linear 4s;*/
 }
