@@ -38,10 +38,10 @@
               <button class="close-button close-button_edit-profile hover-opacity" type="button"></button>
             </div>
             <fieldset class="popup-box__fieldset">
-            <input class="popup-box__input popup-box__input_type_name" type="text" name="user-name" placeholder="Name" minlength="2" maxlength="40" required>
-            <p class="popup-box__error" id="name">Please fill out this field.</p>
-            <input class="popup-box__input popup-box__input_type_job" type="text" name="user-info" placeholder="About me" minlength="2" maxlength="200" required>
-            <p class="popup-box__error" id="about">Please fill out this field.</p>
+            <input class="popup-box__input popup-box__input_type_name" type="text" id="name" name="name" placeholder="Name" minlength="2" maxlength="40" required>
+            <p class="popup-box__error popup-box__error_name"></p>
+            <input class="popup-box__input popup-box__input_type_job" type="text"  id="about"name="about" placeholder="About me" minlength="2" maxlength="200" required>
+            <p class="popup-box__error popup-box__error_about"></p>
             <button class="popup-box__button popup-box__button_edit-profile" type="submit">Save</button>
           </fieldset>
           </form>
@@ -57,10 +57,10 @@
               <button class="close-button close-button_add-card hover-opacity" type="button"></button>
             </div>
             <fieldset class="popup-box__fieldset">
-            <input class="popup-box__input popup-box__input_type_title" type="text" name="card-title" placeholder="Title" required minlength="1" maxlength="30">
-            <p class="popup-box__error"  id="title">Please fill out this field.</p>
-            <input class="popup-box__input popup-box__input_type_link" type="url" name="card-link" placeholder="Image link" required>
-            <p class="popup-box__error" id="url">Please enter a web address.</p>
+            <input class="popup-box__input popup-box__input_type_title" type="text"  id="title" name="title" placeholder="Title" required minlength="1" maxlength="30">
+            <p class="popup-box__error popup-box__error_title"></p>
+            <input class="popup-box__input popup-box__input_type_link" type="url" id="url" name="url" placeholder="Image link" required>
+            <p class="popup-box__error popup-box__error_url"></p>
             <button class="popup-box__button popup-box__button_disabled popup-box__button_add-card" type="submit" disabled>Create</button>
           </fieldset>
           </form>
@@ -89,7 +89,8 @@
       <button class="delete-button hover-opacity" type="button"></button>
     </li>
   </template>
-  <script src="scripts/index.js"></script>
-  <script src="scripts/validation.js"></script>
+  <script src="scripts/settings.js"></script>
+  <script src="scripts/cards.js"></script>
+  <script type="module" src="scripts/index.js"></script>
 </body>
 </html>

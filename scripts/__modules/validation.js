@@ -1,24 +1,14 @@
-// VALIDATION
-const valedationSettings = {
-  formSelector: ".popup-box__form",
-  inputSelector: ".popup-box__input",
-  submitButtonSelector: ".popup-box__button",
-  inactiveButtonClass: "popup-box__button_disabled",
-  inputErrorClass: "popup-box__input_type_error",
-  errorClass: "popup-box__error_visible"
-};/*Configuration Object for validation*/
 
-const showInputError = (props) => {
-  const { inputElement, inputErrorClass, errorClass } = props;
+const showInputError = ({ inputElement, inputErrorClass, errorClass }) => {
   inputElement.classList.add(inputErrorClass);
-  const errorText = inputElement.nextElementSibling;
+  const errorText = document.querySelector(`.popup-box__error_${inputElement.id}`);
+  errorText.textContent = inputElement.validationMessage
   errorText.classList.add(errorClass);
 };/*Show input-error message*/
 
-const hideInputError = (props) => {
-  const { inputElement, inputErrorClass, errorClass } = props;
+const hideInputError = ({ inputElement, inputErrorClass, errorClass }) => {
   inputElement.classList.remove(inputErrorClass);
-  const errorText = inputElement.nextElementSibling;
+  const errorText = document.querySelector(`.popup-box__error_${inputElement.id}`);
   errorText.classList.remove(errorClass);
 };/*Hide input-error message*/
 
@@ -30,20 +20,17 @@ const hasInvalidInput = (inputElements) => {
   return inputElements.some(isInvalid);
 };/*Return true if some of chosen input-elements have invalid input*/
 
-const activateButton = (props) => {
-  const { buttonElement, inactiveButtonClass } = props;
+const activateButton = ({ buttonElement, inactiveButtonClass }) => {
   buttonElement.classList.remove(inactiveButtonClass);
   buttonElement.removeAttribute("disabled", true);
 };/*Activate button*/
 
-const deactivateButton = (props) => {
-  const { buttonElement, inactiveButtonClass } = props;
+const deactivateButton = ({ buttonElement, inactiveButtonClass }) => {
   buttonElement.classList.add(inactiveButtonClass);
   buttonElement.setAttribute("disabled", true);
 }/*Deactivate button*/
 
-const setButtonState = (props) => {
-  const { inputElements, buttonElement, inactiveButtonClass } = props;
+const setButtonState = ({ inputElements, buttonElement, inactiveButtonClass }) => {
   if (hasInvalidInput(inputElements)) {
     deactivateButton({ buttonElement, inactiveButtonClass });
   } else {
@@ -51,8 +38,7 @@ const setButtonState = (props) => {
   };
 };/*Set button state corresponding to valididty of corresponding inputs*/
 
-const checkInputValidity = (props) => {
-  const { inputElement, inputErrorClass, errorClass } = props;
+const checkInputValidity = ({ inputElement, inputErrorClass, errorClass }) => {
   if (isInvalid(inputElement)) {
     showInputError({ inputElement, inputErrorClass, errorClass });
   } else {
@@ -60,44 +46,22 @@ const checkInputValidity = (props) => {
   }
 };/*Set error-message state, depending on validity of the corresponding element*/
 
-const setEventlisteners = (props) => {
-  const {
-    inputElements,
-    buttonElement,
-    inactiveButtonClass,
-    inputErrorClass,
-    errorClass
-  } = props;
+export const setValidation = ({ inputElements, buttonElement, inactiveButtonClass, inputErrorClass, errorClass }) => {
   setButtonState({ inputElements, buttonElement, inactiveButtonClass });
   inputElements.forEach((inputElement) => {
     checkInputValidity({ inputElement, inputErrorClass, errorClass });
   });
-};/*Set event-listeners for validation*/
+};/*Set multiple validation settings for popup-forms*/
 
-const enableValidation = (settings) => {
-  const {
-    formSelector,
-    inputSelector,
-    submitButtonSelector,
-    inactiveButtonClass,
-    inputErrorClass,
-    errorClass
-  } = settings || {};
-
+const enableValidation = ({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }) => {
   const formElements = document.querySelectorAll(formSelector);
   formElements.forEach((formElement) => {
     const buttonElement = formElement.querySelector(submitButtonSelector);
     const fieldset = formElement.querySelector(formFieldsetSelector);
     const inputElements = Array.from(fieldset.querySelectorAll(inputSelector));
 
-    document.addEventListener("keydown", (evt) => {
-      if(evt.key == "Escape") {
-        removeClass(formElement.closest(popupSelector), popupOpenclass);
-      };
-    });
-
     fieldset.addEventListener("input", () => {
-      setEventlisteners({
+      setValidation({
         inputElements: inputElements,
         buttonElement: buttonElement,
         inactiveButtonClass: inactiveButtonClass,
@@ -108,14 +72,8 @@ const enableValidation = (settings) => {
 
     formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      if (formElement.name == "profileForm") {
-        setPopupEditSubmit();
-      } else {
-        setAddCardSubmit();
-      };
-
       fieldset.removeEventListener("input", () => {
-        setEventlisteners({
+        setValidation({
           inputElements: inputElements,
           buttonElement: buttonElement,
           inactiveButtonClass: inactiveButtonClass,
@@ -124,12 +82,22 @@ const enableValidation = (settings) => {
         });
       });
       formElement.reset();
-      document.removeEventListener("keydown", (evt) => {
-        if(evt.key == "Escape") {
-          removeClass(formElement.closest(popupSelector), popupOpenclass);
-        };
-      });
     });
   });
 };
-enableValidation(valedationSettings);
+enableValidation(valedationSettings);/*Enable multiple validation settings for popup-forms*/
+
+export const resetForm = (popup) => {
+  const formElement = popup.querySelector(valedationSettings.formSelector)
+  const buttonElement = popup.querySelector(valedationSettings.submitButtonSelector);
+  const fieldset = formElement.querySelector(".popup-box__fieldset");
+  const inputElements = Array.from(fieldset.querySelectorAll(valedationSettings.inputSelector));
+
+  setValidation({
+    inputElements: inputElements,
+    buttonElement: buttonElement,
+    inactiveButtonClass: valedationSettings.inactiveButtonClass,
+    inputErrorClass: valedationSettings.inputErrorClass,
+    errorClass: valedationSettings.errorClass
+  });
+};/*Reset the chosen popup-form after submitting or closing*/
