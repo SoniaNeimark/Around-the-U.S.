@@ -11,4 +11,11 @@
   grid-area: elements__like;
   align-self: center;
   justify-self: flex-start;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .8s linear;
+}
+
+.like-button:hover {
+  opacity: 0.5;
 }
