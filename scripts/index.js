@@ -120,7 +120,6 @@ const handleAddCardSubmit = () => {
 };/*Create new card from addCard inputs data*/
 
 const setPopupEventListeners = (popup) => {
-  console.log("listen")
   const buttonClose = popup.querySelector(buttonCloseSelector);
   const buttonSubmit = popup.querySelector(validationSettings.submitButtonSelector)
 
@@ -136,21 +135,18 @@ const setPopupEventListeners = (popup) => {
   const handleDocumentOutsidePopup = (evt) => {
     if (evt.target.classList.contains(popupOpenclass)) {
       handlePopupShutDown(evt.currentTarget.querySelector(popupOpenedSelector));
-      console.log("outside")
       removeAllEventListeners();
     }
   };
 
   const handlePopupCloseButton = (evt) => {
     handlePopupShutDown(evt.target.closest(popupOpenedSelector))
-    console.log("close-button")
     removeAllEventListeners();
   };
 
   const handleEscKey = (evt) => {
     if (evt.key == "Escape" && evt.currentTarget.querySelector(popupOpenedSelector)) {
       handlePopupShutDown(evt.currentTarget.querySelector(popupOpenedSelector));
-      console.log("esc")
       removeAllEventListeners()
     };
   };
@@ -158,10 +154,8 @@ const setPopupEventListeners = (popup) => {
   const handleSubmitButtons = (evt) => {
       if (evt.target.closest(popupSelector).classList.contains(popupEditProfileClass)) {
         setUserDataSet()
-        console.log("edit submit")
       } else if (evt.target.closest(popupSelector).classList.contains(popupAddCardClass)) {
         handleAddCardSubmit();
-        console.log("add submit")
       };
       handlePopupShutDown(evt.target.closest(popupSelector));
       removeAllEventListeners();
@@ -173,8 +167,6 @@ const setPopupEventListeners = (popup) => {
   const setButonSubmitEventListener = (popup) => {
     if (popup.querySelector("form")) {
       buttonSubmit.addEventListener("click", handleSubmitButtons)
-    } else {
-      console.log("no form again")
     }
   };
   setButonSubmitEventListener(popup);
