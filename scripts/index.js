@@ -101,9 +101,7 @@ const handleOpenEditProfile = () => {
   setProfileEditFields();
   openPopup(popupEditProfile);
   validateForm(popupEditProfile, validationSettings);
-  if (popupEditProfile.classList.contains(popupOpenclass)) {
-    setPopupEventListeners(popupEditProfile);
-  }
+  setPopupEventListeners(popupEditProfile);
 };/*Profile edit-button event-handler*/
 buttonEditProfile.addEventListener("click", handleOpenEditProfile); /*Listen to Profile edit-button click event*/
 
