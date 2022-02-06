@@ -16,14 +16,17 @@ const newCardImageSelector = ".elements__image";
 const newCardTitleSelector = ".elements__title";
 //////Popups
 const popupSelector = ".popup-box";
+const popupOpenedSelector = ".popup-box_opened";
 const popupSubtitleSelector = ".popup-box__subtitle";
 const popupImageImageSelector = ".popup-box__image";
 const buttonLikeSelector = ".like-button";
 const buttonDeleteSelector = ".delete-button";
+const buttonCloseSelector = ".close-button";
 
 //// CSS CLASSES
 ////// Elements Section
 const buttonLikeActiveClass = "like-button_status_active";
 ////// Popups
 const popupOpenclass = "popup-box_opened";
-
+const popupEditProfileClass = "popup-box_edit-profile";
+const popupAddCardClass = "popup-box_add-card";

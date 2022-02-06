@@ -1,3 +1,5 @@
+import { validateForm, resetValidation } from "./modules/validate.js";
+
 // NODE ELEMENTS
 //// Profile Section
 const profileSection = document.querySelector(".profile")
@@ -14,27 +16,17 @@ const popupEditProfile =  document.querySelector("#edit");
 const popupAddCard = document.querySelector("#add");
 const popupImage = document.querySelector("#image");
 //////// Popup forms
-////////// Popup forms inputs
-//////////// Edit-profile inputs
+////////// Edit-profile inputs
 const userNameToSet = popupEditProfile.querySelector(".popup-box__input_type_name");
 const userJobToSet = popupEditProfile.querySelector(".popup-box__input_type_job");
-//////////// Add-card inputs
+////////// Add-card inputs
 const cardAlttoSet = popupAddCard.querySelector(".popup-box__input_type_title");
 const cardSrctoSet = popupAddCard.querySelector(".popup-box__input_type_link");
-////////// Popup forms submit-buttons
-//////////// Edit-profile submit-button
-const buttonSubmitEditProfile = popupEditProfile.querySelector(validationSettings.submitButtonSelector);
-//////////// Add-card submit-button
-const buttonSubmitAddCard = popupAddCard.querySelector(validationSettings.submitButtonSelector);
-
-//// ARRAYS AND OBJECTS
-const popupBoxes = document.querySelectorAll(popupSelector);
-const popupsCloseButtons = document.querySelectorAll(".close-button");
 
 // FUNCTIONS
 const setImageAttributes = (image, attrs) => {
-  image.setAttribute("alt", attrs.alt);
-  image.setAttribute("src", attrs.src);
+  image.setAttribute("alt", attrs.title);
+  image.setAttribute("src", attrs.url);
 };/*Set multiple attributes for the chosen img element*/
 
 const createNewCard = (newCardAttributes) => {
@@ -44,21 +36,30 @@ const createNewCard = (newCardAttributes) => {
   const cardDeletButton = newCard.querySelector(buttonDeleteSelector);
   const cardLikeButton = newCard.querySelector(buttonLikeSelector);
 
-  newCardTitle.textContent = newCardAttributes.alt;
+  newCardTitle.textContent = newCardAttributes.title;
   setImageAttributes(newCardImage, newCardAttributes);
   cardDeletButton.addEventListener("click", (evt) => {deleteElement(evt.target, cardSelector)});
   cardLikeButton.addEventListener("click", (evt) => {evt.target.classList.toggle(buttonLikeActiveClass)});
-  newCardImage.addEventListener("click", (evt) => {openTargetImagePopup(evt.target)});
+  newCardImage.addEventListener("click", (evt) => {handleOpenTargetImagePopup(evt.target)});
   return newCard
 }; /*Create a new card && add it to cardGallery*/
 
 const addDefaultCards = () => {
   initialCards.forEach(function (card) {
-    const newCard = createNewCard({ alt: card.name, src: card.link });
+    const newCard = createNewCard({ title: card.name, url: card.link });
     cardGallery.append(newCard);
   });
 };
 addDefaultCards(); /*Create 6 default cards from the initialCards array and add them to the cardGallery*/
+
+const handleOpenTargetImagePopup = (targetImage) => {
+  const image = popupImage.querySelector(popupImageImageSelector);
+  const subtitle = popupImage.querySelector(popupSubtitleSelector);
+  subtitle.textContent = targetImage.alt;
+  setImageAttributes(image, { title: targetImage.alt, url: targetImage.src });
+  openPopup(popupImage);
+  setPopupEventListeners(popupImage);
+};/*Open popup with the corresponding image*/
 
 const setUserDataSet = () => {
   userNameSet.textContent = userNameToSet.value;
@@ -70,21 +71,6 @@ const setProfileEditFields = () => {
   userJobToSet.value = userJobSet.textContent;
 };/*Set profileEdit inputs*/
 
-const openTargetImagePopup = (targetImage) => {
-  const image = popupImage.querySelector(popupImageImageSelector);
-  const subtitle = popupImage.querySelector(popupSubtitleSelector);
-  const subtitleInfo = targetImage.closest(cardSelector).querySelector(newCardTitleSelector).textContent;
-  subtitle.textContent = subtitleInfo;
-  const popupImageAttributes = {};
-  popupImageAttributes["alt"] = targetImage.closest(cardSelector).querySelector(newCardTitleSelector).textContent,
-  popupImageAttributes["src"] = targetImage.closest(cardSelector).querySelector(newCardImageSelector).src
-  setImageAttributes(image, popupImageAttributes);
-  openPopup(popupImage);
-};/*Open popup with the corresponding image*/
-
-//// Event-listeners settings
-import { validateForm, resetValidation } from "./modules/validation.js";
-
 const openPopup = (popupWrapper) => {
   popupWrapper.classList.add(popupOpenclass);
 };/*Open the chosen popup-box*/
@@ -93,79 +79,104 @@ const closePopup = (popupWrapper) => {
   popupWrapper.classList.remove(popupOpenclass);
 };/*close the chosen popup-box*/
 
+const resetForm = (formContainer) => {
+    const popupForm = formContainer.querySelector("form")
+    popupForm.reset();
+};/*Reset the chosen form*/
+
 const deleteElement = (button, parentClassSelector) => {
   const parent = button.closest(parentClassSelector);
   parent.remove();
-};/*Delete a button's corresponding element*/
+};/*Delete button's corresponding element*/
 
-const resetForm = (parent) => {
-  if (parent !== popupImage) {
-    const popupForm = parent.querySelector(validationSettings.formSelector)
-    popupForm.reset();
-  };
-};/*Reset the chosen form*/
-
-const resetAndClosePopup = (parent) => {
-  if (parent.classList.contains(popupOpenclass)) {
-    resetForm(parent);
-    closePopup(parent);
+//// Event-handlers
+const handlePopupShutDown = (popup) => {
+  if (popup.querySelector("form")) {
+    resetForm(popup);
   }
-};/*Reset the chosen form and close its parent popup*/
+  closePopup(popup);
+};/*Shut down the chosen popup properly*/
 
 const handleOpenEditProfile = () => {
   setProfileEditFields();
   openPopup(popupEditProfile);
   validateForm(popupEditProfile, validationSettings);
+  if (popupEditProfile.classList.contains(popupOpenclass)) {
+    setPopupEventListeners(popupEditProfile);
+  }
 };/*Profile edit-button event-handler*/
 buttonEditProfile.addEventListener("click", handleOpenEditProfile); /*Listen to Profile edit-button click event*/
 
 const handleOpenAddCard = () => {
   openPopup(popupAddCard);
   resetValidation(popupAddCard, validationSettings);
+  setPopupEventListeners(popupAddCard);
 };/*Profile add-button event-handler*/
 buttonAddCard.addEventListener("click", handleOpenAddCard); /*Listen to Profile add-button click event*/
 
-const handleEscKey = (evt, popup) => {
-  if (evt.key == "Escape") {
-    resetAndClosePopup(popup);
-  };
-};/*Escape-key keydown event-handler for popup*/
-
-const handleEscKeyForAllPopups = (evt) => {
-  const popups = Array.from(popupBoxes)
-  popups.forEach((popup) => {
-    handleEscKey(evt, popup);
-  });
-  document.removeEventListener("keydown", (evt) => {handleEscKeyForAllPopups(evt)})
-};/*Escape-key keydown event-handler for all popups*/
-document.addEventListener("keydown", (evt) => {handleEscKeyForAllPopups(evt)})/*Listen to document escape-key keydown event*/
-
-document.addEventListener("click", (evt) => {resetAndClosePopup(evt.target)});/*Listen to click outside formElement events*/
-
-const handlePopupCloseButton = (button) => {
-  resetAndClosePopup(button.closest(popupSelector))
-};/*Popup close-button event-handler*/
-
-const setButtonsCloseEventListener = () => {
-  popupsCloseButtons.forEach((button) => {
-    button.addEventListener("click", () => {handlePopupCloseButton(button)});
-  });
-};/*All popups' close-buttons event-handler*/
-setButtonsCloseEventListener(); /*Listen to all popups' close-buttons click events*/
-
-const handlePopupEditSubmit = () => {
-  setUserDataSet();
-  resetAndClosePopup(popupEditProfile);
-};/*Update Profile user info from profileEdit inputs data */
-buttonSubmitEditProfile.addEventListener("click", /*() => {*/handlePopupEditSubmit/*()}*/);
-/*Listen to Edtt-Profile form submit button click event*/
-
 const handleAddCardSubmit = () => {
-  const newCard = createNewCard({ alt: cardAlttoSet.value, src: cardSrctoSet.value });
+  const newCard = createNewCard({ title: cardAlttoSet.value, url: cardSrctoSet.value });
   cardGallery.prepend(newCard);
-  resetAndClosePopup(popupAddCard);
 };/*Create new card from addCard inputs data*/
-buttonSubmitAddCard.addEventListener("click", /*() => {*/handleAddCardSubmit/*()}*/);
-/*Listen to Add-Card form submit button click event*/
 
+const setPopupEventListeners = (popup) => {
+  console.log("listen")
+  const buttonClose = popup.querySelector(buttonCloseSelector);
+  const buttonSubmit = popup.querySelector(validationSettings.submitButtonSelector)
+
+  const removeAllEventListeners = () => {
+    document.removeEventListener("keydown", handleEscKey);
+    document.removeEventListener("click", handleDocumentOutsidePopup);
+    buttonClose.removeEventListener("click", handlePopupCloseButton);
+    if (popup.querySelector("form")) {
+      buttonSubmit.removeEventListener("click", handleSubmitButtons);
+    }
+  };
+
+  const handleDocumentOutsidePopup = (evt) => {
+    if (evt.target.classList.contains(popupOpenclass)) {
+      handlePopupShutDown(evt.currentTarget.querySelector(popupOpenedSelector));
+      console.log("outside")
+      removeAllEventListeners();
+    }
+  };
+
+  const handlePopupCloseButton = (evt) => {
+    handlePopupShutDown(evt.target.closest(popupOpenedSelector))
+    console.log("close-button")
+    removeAllEventListeners();
+  };
+
+  const handleEscKey = (evt) => {
+    if (evt.key == "Escape" && evt.currentTarget.querySelector(popupOpenedSelector)) {
+      handlePopupShutDown(evt.currentTarget.querySelector(popupOpenedSelector));
+      console.log("esc")
+      removeAllEventListeners()
+    };
+  };
+
+  const handleSubmitButtons = (evt) => {
+      if (evt.target.closest(popupSelector).classList.contains(popupEditProfileClass)) {
+        setUserDataSet()
+        console.log("edit submit")
+      } else if (evt.target.closest(popupSelector).classList.contains(popupAddCardClass)) {
+        handleAddCardSubmit();
+        console.log("add submit")
+      };
+      handlePopupShutDown(evt.target.closest(popupSelector));
+      removeAllEventListeners();
+  };
+
+  document.addEventListener("keydown", handleEscKey);
+  document.addEventListener("click", handleDocumentOutsidePopup);
+  buttonClose.addEventListener("click", handlePopupCloseButton);
+  const setButonSubmitEventListener = (popup) => {
+    if (popup.querySelector("form")) {
+      buttonSubmit.addEventListener("click", handleSubmitButtons)
+    } else {
+      console.log("no form again")
+    }
+  };
+  setButonSubmitEventListener(popup);
+};/*Set event listeners for the chosen popup*/
 

@@ -8,6 +8,7 @@ const showInputError = (formElement, inputElement, props) => {
 const hideInputError = (formElement, inputElement, props) => {
   inputElement.classList.remove(props.inputErrorClass);
   const errorText =  formElement.querySelector(`.popup-box__error_${inputElement.id}`);
+  errorText.textContent = ""
   errorText.classList.remove(props.errorClass);
 };/*Hide input-error message*/
 
@@ -40,7 +41,6 @@ const setButtonState = (formElement, props) => {
   };
 };/*Set button state corresponding to valididty of corresponding inputs*/
 
-
 const checkInputValidity = (formElement, inputElement, props) => {
   if (isInvalid(inputElement)) {
     showInputError(formElement, inputElement, props);
@@ -67,8 +67,12 @@ export const resetValidation = (formElement, props) => {
 
 const setEventListeners = (formElement, props) => {
   formElement.addEventListener("submit", (evt) => {evt.preventDefault()})
-  formElement.addEventListener("input", () => {validateForm(formElement, props)})
-};
+  formElement.addEventListener("input", () => {setButtonState(formElement, props)})
+  const inputElements = Array.from(formElement.querySelectorAll(props.inputSelector));
+  inputElements.forEach((inputElement) => {
+    inputElement.addEventListener("input", () => {checkInputValidity(formElement, inputElement, props)});
+  });
+};/*Set event listeners for validation*/
 
 const enableValidation = (props) => {
   const formElements = Array.from(document.querySelectorAll(props.formSelector));
