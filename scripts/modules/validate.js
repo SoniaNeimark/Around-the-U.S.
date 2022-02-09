@@ -66,7 +66,6 @@ export const resetValidation = (formElement, props) => {
 };/*Reset the chosen formElement validation results*/
 
 const setEventListeners = (formElement, props) => {
-  formElement.addEventListener("submit", (evt) => {evt.preventDefault()})
   formElement.addEventListener("input", () => {setButtonState(formElement, props)})
   const inputElements = Array.from(formElement.querySelectorAll(props.inputSelector));
   inputElements.forEach((inputElement) => {

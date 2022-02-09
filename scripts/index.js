@@ -11,15 +11,21 @@ const userJobSet = profileSection.querySelector(".profile__profession");
 const cardGallery = document.querySelector(".elements__cards");
 const newCardTemplate = document.querySelector("#elements__card");
 //// Popups
+////// Popups Nodelist
+const popups = document.querySelectorAll(popupSelector)
 ////// Popup wrappers
-const popupEditProfile =  document.querySelector("#edit");
+const popupEditProfile = document.querySelector("#edit");
 const popupAddCard = document.querySelector("#add");
 const popupImage = document.querySelector("#image");
 //////// Popup forms
-////////// Edit-profile inputs
+const popupEditProfileForm = popupEditProfile.querySelector(validationSettings.formSelector)
+const popupAddCardForm = popupAddCard.querySelector(validationSettings.formSelector)
+////////// Edit-profile form
+//////////// Edit-profile form inputs
 const userNameToSet = popupEditProfile.querySelector(".popup-box__input_type_name");
 const userJobToSet = popupEditProfile.querySelector(".popup-box__input_type_job");
-////////// Add-card inputs
+////////// Add-card form
+//////////// Add-card form inputs
 const cardAlttoSet = popupAddCard.querySelector(".popup-box__input_type_title");
 const cardSrctoSet = popupAddCard.querySelector(".popup-box__input_type_link");
 
@@ -42,7 +48,7 @@ const createNewCard = (newCardAttributes) => {
   cardLikeButton.addEventListener("click", (evt) => {evt.target.classList.toggle(buttonLikeActiveClass)});
   newCardImage.addEventListener("click", (evt) => {handleOpenTargetImagePopup(evt.target)});
   return newCard
-}; /*Create a new card && add it to cardGallery*/
+}; /*Create a new card*/
 
 const addDefaultCards = () => {
   initialCards.forEach(function (card) {
@@ -52,24 +58,10 @@ const addDefaultCards = () => {
 };
 addDefaultCards(); /*Create 6 default cards from the initialCards array and add them to the cardGallery*/
 
-const handleOpenTargetImagePopup = (targetImage) => {
-  const image = popupImage.querySelector(popupImageImageSelector);
-  const subtitle = popupImage.querySelector(popupSubtitleSelector);
-  subtitle.textContent = targetImage.alt;
-  setImageAttributes(image, { title: targetImage.alt, url: targetImage.src });
-  openPopup(popupImage);
-  setPopupEventListeners(popupImage);
-};/*Open popup with the corresponding image*/
-
-const setUserDataSet = () => {
-  userNameSet.textContent = userNameToSet.value;
-  userJobSet.textContent = userJobToSet.value;
-}/*Provide user info for Profile*/
-
-const setProfileEditFields = () => {
-  userNameToSet.value = userNameSet.textContent;
-  userJobToSet.value = userJobSet.textContent;
-};/*Set profileEdit inputs*/
+const deleteElement = (button, parentClassSelector) => {
+  const parent = button.closest(parentClassSelector);
+  parent.remove();
+};/*Delete button's corresponding element*/
 
 const openPopup = (popupWrapper) => {
   popupWrapper.classList.add(popupOpenclass);
@@ -84,89 +76,77 @@ const resetForm = (formContainer) => {
     popupForm.reset();
 };/*Reset the chosen form*/
 
-const deleteElement = (button, parentClassSelector) => {
-  const parent = button.closest(parentClassSelector);
-  parent.remove();
-};/*Delete button's corresponding element*/
+const setProfileEditFields = () => {
+  userNameToSet.value = userNameSet.textContent;
+  userJobToSet.value = userJobSet.textContent;
+};/*Set profileEdit form inputs*/
 
 //// Event-handlers
-const handlePopupShutDown = (popup) => {
-  if (popup.querySelector("form")) {
-    resetForm(popup);
-  }
-  closePopup(popup);
-};/*Shut down the chosen popup properly*/
+const handleOpenTargetImagePopup = (targetImage) => {
+  const image = popupImage.querySelector(popupImageImageSelector);
+  const subtitle = popupImage.querySelector(popupSubtitleSelector);
+  subtitle.textContent = targetImage.alt;
+  setImageAttributes(image, { title: targetImage.alt, url: targetImage.src });
+  openPopup(popupImage);
+  document.addEventListener("keydown", handleEscKey)
+};/*Open popup with the corresponding image*/
 
 const handleOpenEditProfile = () => {
   setProfileEditFields();
   openPopup(popupEditProfile);
   validateForm(popupEditProfile, validationSettings);
-  setPopupEventListeners(popupEditProfile);
+  document.addEventListener("keydown", handleEscKey)
 };/*Profile edit-button event-handler*/
 buttonEditProfile.addEventListener("click", handleOpenEditProfile); /*Listen to Profile edit-button click event*/
 
 const handleOpenAddCard = () => {
   openPopup(popupAddCard);
   resetValidation(popupAddCard, validationSettings);
-  setPopupEventListeners(popupAddCard);
+  document.addEventListener("keydown", handleEscKey)
 };/*Profile add-button event-handler*/
 buttonAddCard.addEventListener("click", handleOpenAddCard); /*Listen to Profile add-button click event*/
 
-const handleAddCardSubmit = () => {
+const handlePopupShutDown = (popup) => {
+  if (popup.querySelector("form")) {
+    resetForm(popup);
+  }
+  closePopup(popup);
+  document.removeEventListener("keydown", handleEscKey);
+};/*Shut down the chosen popup properly*/
+
+const handleEscKey = (evt) => {
+  if (evt.key == "Escape") {
+    handlePopupShutDown(document.querySelector(popupOpenedSelector));
+  };
+};
+
+const handleEditProfileSubmit = (evt) => {
+  evt.preventDefault();
+  userNameSet.textContent = userNameToSet.value;
+  userJobSet.textContent = userJobToSet.value;
+  handlePopupShutDown(popupEditProfile);
+}
+popupEditProfileForm.addEventListener("submit", handleEditProfileSubmit);
+
+const handleAddCardSubmit = (evt) => {
+  evt.preventDefault();
   const newCard = createNewCard({ title: cardAlttoSet.value, url: cardSrctoSet.value });
   cardGallery.prepend(newCard);
-};/*Create new card from addCard inputs data*/
+  handlePopupShutDown(popupAddCard);
+};
+popupAddCardForm.addEventListener("submit", handleAddCardSubmit);
 
-const setPopupEventListeners = (popup) => {
-  const buttonClose = popup.querySelector(buttonCloseSelector);
-  const buttonSubmit = popup.querySelector(validationSettings.submitButtonSelector)
+const handleClickOutsidePopup = (evt) => {
+  if (evt.target.classList.contains(popupOpenclass)) {
+    handlePopupShutDown(evt.target);
+  }
+};
 
-  const removeAllEventListeners = () => {
-    document.removeEventListener("keydown", handleEscKey);
-    document.removeEventListener("click", handleDocumentOutsidePopup);
-    buttonClose.removeEventListener("click", handlePopupCloseButton);
-    if (popup.querySelector("form")) {
-      buttonSubmit.removeEventListener("click", handleSubmitButtons);
-    }
-  };
-
-  const handleDocumentOutsidePopup = (evt) => {
-    if (evt.target.classList.contains(popupOpenclass)) {
-      handlePopupShutDown(evt.currentTarget.querySelector(popupOpenedSelector));
-      removeAllEventListeners();
-    }
-  };
-
-  const handlePopupCloseButton = (evt) => {
-    handlePopupShutDown(evt.target.closest(popupOpenedSelector))
-    removeAllEventListeners();
-  };
-
-  const handleEscKey = (evt) => {
-    if (evt.key == "Escape" && evt.currentTarget.querySelector(popupOpenedSelector)) {
-      handlePopupShutDown(evt.currentTarget.querySelector(popupOpenedSelector));
-      removeAllEventListeners()
-    };
-  };
-
-  const handleSubmitButtons = (evt) => {
-      if (evt.target.closest(popupSelector).classList.contains(popupEditProfileClass)) {
-        setUserDataSet()
-      } else if (evt.target.closest(popupSelector).classList.contains(popupAddCardClass)) {
-        handleAddCardSubmit();
-      };
-      handlePopupShutDown(evt.target.closest(popupSelector));
-      removeAllEventListeners();
-  };
-
-  document.addEventListener("keydown", handleEscKey);
-  document.addEventListener("click", handleDocumentOutsidePopup);
-  buttonClose.addEventListener("click", handlePopupCloseButton);
-  const setButonSubmitEventListener = (popup) => {
-    if (popup.querySelector("form")) {
-      buttonSubmit.addEventListener("click", handleSubmitButtons)
-    }
-  };
-  setButonSubmitEventListener(popup);
-};/*Set event listeners for the chosen popup*/
-
+const setPopupsEventListeners = () => {
+  popups.forEach((popup) => {
+    const buttonClose = popup.querySelector(buttonCloseSelector);
+    popup.addEventListener("click", handleClickOutsidePopup);
+    buttonClose.addEventListener("click", () => {handlePopupShutDown(popup)});
+  });
+};
+setPopupsEventListeners();
