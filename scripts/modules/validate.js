@@ -12,12 +12,12 @@ const hideInputError = (formElement, inputElement, props) => {
   errorText.classList.remove(props.errorClass);
 };/*Hide input-error message*/
 
-const isInvalid = (inputElement) => {
+const checkIfInvalid = (inputElement) => {
   return !inputElement.validity.valid;
 };/*Return true if the input-element has invalid input*/
 
 const hasInvalidInput = (inputElements) => {
-  return inputElements.some(isInvalid);
+  return inputElements.some(checkIfInvalid);
 };/*Return true if some of chosen input-elements have invalid input*/
 
 const activateButton = (formElement, props) => {
@@ -42,7 +42,7 @@ const setButtonState = (formElement, props) => {
 };/*Set button state corresponding to valididty of corresponding inputs*/
 
 const checkInputValidity = (formElement, inputElement, props) => {
-  if (isInvalid(inputElement)) {
+  if (checkIfInvalid(inputElement)) {
     showInputError(formElement, inputElement, props);
   } else {
     hideInputError(formElement, inputElement, props);

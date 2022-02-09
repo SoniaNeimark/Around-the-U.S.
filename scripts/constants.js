@@ -27,6 +27,6 @@ const buttonCloseSelector = ".close-button";
 ////// Elements Section
 const buttonLikeActiveClass = "like-button_status_active";
 ////// Popups
-const popupOpenclass = "popup-box_opened";
+const popupOpenClass = "popup-box_opened";
 const popupEditProfileClass = "popup-box_edit-profile";
 const popupAddCardClass = "popup-box_add-card";
