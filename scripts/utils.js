@@ -7,7 +7,7 @@ const setImageAttributes = (image, attrs) => {
 /**Open the chosen popup-box*/
 const openPopup = (popupWrapper) => {
   const buttonClose = popupWrapper.querySelector(documentSettings.buttonCloseSelector);
-  popupWrapper.classList.add(documentSettings.popupOpenClass); //defined constants.js line 30
+  popupWrapper.classList.add(documentSettings.popupOpenClass);
   document.addEventListener("keydown", handleEscKey)
   popupWrapper.addEventListener("mousedown", handleClickOutsidePopup);
   buttonClose.addEventListener("click", handleButtonClose);
@@ -24,14 +24,7 @@ const closePopup = (popupWrapper) => {
 
 /**Reset the chosen form*/
 const resetForm = (formContainer) => {
-  const popupForm = formContainer.querySelector("form")
-  popupForm.reset();
-};
-
-/**Set profileEdit form inputs*/
-const setProfileEditFields = () => {
-  pageSettings.userNameToSet.value = pageSettings.userNameSet.textContent;
-  pageSettings.userJobToSet.value = pageSettings.userJobSet.textContent;
+  formContainer.querySelector("form").reset();
 };
 
 /**Handle close popup on "esc" keydawn*/
@@ -52,5 +45,6 @@ const handleClickOutsidePopup = (evt) => {
 const handleButtonClose = (evt) => {
   closePopup(evt.currentTarget.closest(documentSettings.popupSelector))
 }
+
 
 

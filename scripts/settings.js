@@ -11,7 +11,7 @@ const documentSettings = {
   popupOpenedSelector: ".popup-box_opened",
   popupSubtitleSelector: ".popup-box__subtitle",
   popupImageImageSelector: ".popup-box__image",
-// POPUP OPEN CSS CLASS
+/// POPUP OPEN CSS CLASS
   popupOpenClass: "popup-box_opened"
 }
 
@@ -19,6 +19,7 @@ const validationSettings = {
   formSelector: ".popup-box__form",
   inputSelector: ".popup-box__input",
   submitButtonSelector: ".popup-box__button",
+  errorHiddenSelector: ".popup-box__error",
   inactiveButtonClass: "popup-box__button_disabled",
   inputErrorClass: "popup-box__input_type_error",
   errorClass: "popup-box__error_visible"
@@ -31,10 +32,10 @@ const pageSettings = {
 // ELEMENTS SECTION
 /// SELECTORS
   cardTemplateSelector: "#elements__card",
-/// SCC CLASSES
-  newCardSelector: ".elements__card",
-  newCardImageSelector: ".elements__image",
-  newCardTitleSelector: ".elements__title",
+/// CSS CLASSES
+  cardSelector: ".elements__card",
+  cardImageSelector: ".elements__image",
+  cardTitleSelector: ".elements__title",
 /// NODE ELEMENTS
   cardGallery: document.querySelector(".elements__cards"),
 
