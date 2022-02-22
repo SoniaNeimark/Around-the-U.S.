@@ -1,6 +1,6 @@
 export class FormValidator {
-  constructor(data, formElement) {
-    this._formElement = formElement;
+  constructor(data, formElementSelector) {
+    this._formElement = document.querySelector(formElementSelector);
     this._data = data;
     this._inputElements = Array.from(this._formElement.querySelectorAll(this._data.inputSelector));
   }
@@ -8,7 +8,9 @@ export class FormValidator {
   /**Show input-error message*/
   _showInputError(inputElement) {
     inputElement.classList.add(this._data.inputErrorClass);
-    this._errorText = this._formElement.querySelector(`${validationSettings.errorHiddenSelector}_${inputElement.id}`);
+    this._errorText = this
+    ._formElement
+    .querySelector(`${this._data.errorHiddenSelector}_${inputElement.id}`);
     this._errorText.textContent = inputElement.validationMessage;
     this._errorText.classList.add(this._data.errorClass);
   }
@@ -16,7 +18,9 @@ export class FormValidator {
   /**Hide input-error message*/
   _hideInputError(inputElement) {
     inputElement.classList.remove(this._data.inputErrorClass);
-    this._errorText = this._formElement.querySelector(`${validationSettings.errorHiddenSelector}_${inputElement.id}`);
+    this._errorText = this
+    ._formElement
+    .querySelector(`${this._data.errorHiddenSelector}_${inputElement.id}`);
     this._errorText.textContent = "";
     this._errorText.classList.remove(this._data.errorClass);
   }

@@ -1,6 +1,6 @@
 .like-button_status_active {
   opacity: 1;
-  background-image: url(../../../images/svg/like_active.svg);
+  background-image: url(../../../../images/svg/like_active.svg);
   transition: none;
 }
 

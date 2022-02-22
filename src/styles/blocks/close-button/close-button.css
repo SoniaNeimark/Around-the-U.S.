@@ -8,7 +8,7 @@
     cursor: pointer;
     border: none;
     background-color: transparent;
-    background-image: url(../../images/svg/add_close.svg);
+    background-image: url(../../../images/svg/add_close.svg);
     background-size: contain;
     background-repeat: no-repeat;
     box-sizing: border-box;
