@@ -14,6 +14,10 @@ logo.src = logoSrc;
 const profileImage = document.getElementById("profile");
 profileImage.src = profileSrc;
 const thisPageSettings = { ...documentSettings, ...pageSettings, ...validationSettings };
+const buttonEditProfile = document.querySelector(thisPageSettings.buttonEditProfileSelector);
+const buttonAddCard = document.querySelector(thisPageSettings.buttonAddCardSelector);
+const profileNameInput = document.querySelector(thisPageSettings.userNameToSetSelector);
+const profileJobInput = document.querySelector(thisPageSettings.userJobToSetSelector);
 
 //CARD GALLERY
 /**Create a new card, using provided data*/
@@ -51,9 +55,10 @@ const popupEdit = new PopupWithForm(thisPageSettings,
   thisPageSettings.popupEditProfileSelector,
   (evt) => {
   evt.preventDefault();
+  const { name, about } = popupEdit.getInputValues();
   userInfo.setUserInfo({
-    nameInfo: popupEdit.getInputValues().name,
-    jobInfo: popupEdit.getInputValues().about
+    nameInfo: name,
+    jobInfo: about
   });
   popupEdit.close();
 });
@@ -62,24 +67,26 @@ popupEdit.setEventListeners();
 const popupAdd = new PopupWithForm(thisPageSettings,
   thisPageSettings.popupAddCardSelector, (evt) => {
   evt.preventDefault();
+  const { title, url } = popupAdd.getInputValues();
   cardsGallery.addItem(createCard({
-    title: popupAdd.getInputValues().title,
-    url: popupAdd.getInputValues().url
+    title: title,
+    url: url
   }, thisPageSettings));
   popupAdd.close();
 });
   popupAdd.setEventListeners();
 
 /**Profile edit-button event-handler*/
-document.querySelector(thisPageSettings.buttonEditProfileSelector).addEventListener("click", () => {
+buttonEditProfile.addEventListener("click", () => {
   popupEdit.open();
-  document.querySelector(thisPageSettings.userNameToSetSelector).value = userInfo.getUserInfo().name;
-  document.querySelector(thisPageSettings.userJobToSetSelector).value = userInfo.getUserInfo().job;
+  const { name, job } = userInfo.getUserInfo()
+  profileNameInput.value = name;
+  profileJobInput.value = job;
   profileFormValidator.validateForm();
 });
 
 /**Profile add-button event-handler*/
-document.querySelector(thisPageSettings.buttonAddCardSelector).addEventListener("click", () => {
+buttonAddCard.addEventListener("click", () => {
   popupAdd.open();
   cardAddFormValidator.resetValidation();
 });
