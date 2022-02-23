@@ -3,6 +3,7 @@ export class FormValidator {
     this._formElement = document.querySelector(formElementSelector);
     this._data = data;
     this._inputElements = Array.from(this._formElement.querySelectorAll(this._data.inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._data.submitButtonSelector);
   }
 
   /**Show input-error message*/
@@ -37,14 +38,12 @@ export class FormValidator {
 
   /**Activate submit-button*/
   _activateButton() {
-    this._buttonElement = this._formElement.querySelector(this._data.submitButtonSelector);
     this._buttonElement.classList.remove(this._data.inactiveButtonClass);
     this._buttonElement.removeAttribute("disabled");
   }
 
   /**Deactivate submit-button*/
   _deactivateButton() {
-    this._buttonElement = this._formElement.querySelector(this._data.submitButtonSelector);
     this._buttonElement.classList.add(this._data.inactiveButtonClass);
     this._buttonElement.setAttribute("disabled", true);
   }

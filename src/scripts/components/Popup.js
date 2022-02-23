@@ -1,25 +1,20 @@
-import { documentSettings } from "../utils/settings.js";
-const {
-  popupOpenClass,
-  buttonCloseSelector
-} = documentSettings;
-
 /**Create Popup class */
 export default class Popup {
-  constructor(popupSelector) {
+  constructor(data, popupSelector) {
+    this._data = data
     this._popup = document.querySelector(popupSelector);
-    this._buttonClose = this._popup.querySelector(buttonCloseSelector);
+    this._buttonClose = this._popup.querySelector(this._data.buttonCloseSelector);
   }
 
 /**Open popup */
-  open = () => {
-    this._popup.classList.add(popupOpenClass);
+  open() {
+    this._popup.classList.add(this._data.popupOpenClass);
     this.setEventListeners();
   }
 
 /**Close popup */
-  close = () => {
-    this._popup.classList.remove(popupOpenClass);
+  close() {
+    this._popup.classList.remove(this._data.popupOpenClass);
     this.removeEventListeners();
   }
 
