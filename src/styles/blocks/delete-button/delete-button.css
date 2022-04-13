@@ -8,7 +8,7 @@
   background-image: url(../../../images/svg/trash.svg);
   background-color: transparent;
   background-size: cover;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }

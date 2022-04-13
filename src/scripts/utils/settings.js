@@ -6,6 +6,7 @@ export const documentSettings = {
   buttonCloseSelector: ".close-button",
 /// CSS CLASSES
   buttonLikeActiveClass: "like-button_status_active",
+  buttonDeleteActiveClass: "delete-button_visible",
 
 // POPUPS
 /// SELECTORS
@@ -36,6 +37,7 @@ export const pageSettings = {
   cardSelector: ".elements__card",
   cardImageSelector: ".elements__image",
   cardTitleSelector: ".elements__title",
+  cardLikesNumberSelector: ".elements__like-number",
 
 // PROFILE SECTION
 /// SELECTORS
@@ -43,12 +45,19 @@ export const pageSettings = {
   userJobSetSelector: ".profile__profession",
   buttonEditProfileSelector: ".edit-button",
   buttonAddCardSelector: ".add-button",
+  avatarEditButtonSelector: ".avatar-edit-button",
+  buttonSubmitAlertSelector: ".popup-box__button_alert",
+  profileEditSubmitButtonSelector: ".popup-box__button_edit-profile",
+  addCardSubmitButtonSelector: ".popup-box__button_add-card",
 
 // POPUPS
 /// SELECTORS
   popupEditProfileSelector: ".popup-box_edit-profile",
+  popupEditAvatarSelector: ".popup-box_edit-avatar",
   popupAddCardSelector: ".popup-box_add-card",
   popupImageSelector: ".popup-box_image",
+  popupAlertSelector: ".popup-box_alert",
   userNameToSetSelector: ".popup-box__input_type_name",
   userJobToSetSelector: ".popup-box__input_type_job",
+  userAvatarToSetSelector: ".popup-box__input_type_avatarUrl"
 }
