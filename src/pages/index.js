@@ -18,8 +18,8 @@ const buttonAddCard = document.querySelector(thisPageSettings.buttonAddCardSelec
 const buttonEditAvatar = document.querySelector(thisPageSettings.avatarEditButtonSelector)
 const profileNameInput = document.querySelector(thisPageSettings.userNameToSetSelector);
 const profileJobInput = document.querySelector(thisPageSettings.userJobToSetSelector);
-const profileAvatarUrlInput = document.querySelector(thisPageSettings.userAvatarToSetSelector)
 const profileEditSubmitButton = document.querySelector(thisPageSettings.profileEditSubmitButtonSelector)
+const avatarEditSubmitButton = document.querySelector(thisPageSettings.avatarEditSubmitButtonSelector)
 const addCardSubmitButton = document.querySelector(thisPageSettings.addCardSubmitButtonSelector)
 
 const userInfo = new UserInfo(thisPageSettings);
@@ -168,10 +168,19 @@ const popupEditAvatar = new PopupWithForm(thisPageSettings,
   thisPageSettings.popupEditAvatarSelector,
   (evt) => {
     evt.preventDefault();
+    renderLoading(true, avatarEditSubmitButton)
     const url = popupEditAvatar.getInputValues();
-    api.editAvatar(url.avatarUrl);
-    profileImage.style.backgroundImage = `url(${url.avatarUrl})`
-    popupEditAvatar.close();
+    api.editAvatar(url.avatarUrl)
+    .then(() => {
+      profileImage.style.backgroundImage = `url(${url.avatarUrl})`
+    })
+    .then(() => {
+      popupEditAvatar.close();
+    })
+
+    .catch(err => console.log(err))
+
+    .finally(() => renderLoading(false, avatarEditSubmitButton, "Save"))
   });
 
 buttonEditAvatar.addEventListener("click", () => {

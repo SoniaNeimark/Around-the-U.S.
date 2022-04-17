@@ -50,6 +50,7 @@ export const pageSettings = {
   buttonSubmitAlertSelector: ".popup-box__button_alert",
   profileEditSubmitButtonSelector: ".popup-box__button_edit-profile",
   addCardSubmitButtonSelector: ".popup-box__button_add-card",
+  avatarEditSubmitButtonSelector: ".popup-box__button_edit-avatar",
 
 // POPUPS
 /// SELECTORS
