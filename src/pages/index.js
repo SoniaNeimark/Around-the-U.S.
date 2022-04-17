@@ -8,6 +8,7 @@ import { FormValidator } from "../scripts/components/FormValidator.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js"
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
+import { data } from "autoprefixer";
 const logo = document.getElementById("logo");
 logo.src = logoSrc;
 const profileImage = document.getElementById("profile");
@@ -39,50 +40,48 @@ const avatarFormValidator = new FormValidator(thisPageSettings, thisPageSettings
 avatarFormValidator.enableValidation();
 
 api.getData()
-.then((data) => {
+.then(([userData, cards]) => {
   userInfo.setUserInfo({
-    nameInfo: data[0].name,
-    jobInfo: data[0].about
+    name: userData.name,
+    about: userData.about,
+    avatar: userData.avatar
   });
-  profileImage.style.backgroundImage = `url(${data[0].avatar})`;
 
-  const cardsGallery = new Section(data[1], (item) => {
-    cardsGallery.addItem(createCard(item, data[0]._id))
+  const cardsGallery = new Section(cards, (item) => {
+    cardsGallery.addItem(createCard(item, userData._id))
   }, thisPageSettings.cardsGallerySelector);
-  cardsGallery.renderItems(data[1])
+  cardsGallery.renderItems(cards)
 
   const popupAdd = new PopupWithForm(thisPageSettings,
     thisPageSettings.popupAddCardSelector, (evt) => {
     evt.preventDefault();
     renderLoading(true, addCardSubmitButton);
     const inputValues = popupAdd.getInputValues();
-    const cardObj = {
+    const card = {
       name: inputValues.title,
       link: inputValues.url,
       owner: {
-        _id: data[0]._id
+        _id: userData._id
       },
       likes: []
     }
-    api.addCard(cardObj)
+
+    api.addCard(card)
     .then((res) => {
-      if(res.ok) {
-        return res.json()
-      }
-      return Promise.reject(res.statusText)
+      cardsGallery.addItem(createCard(res, userData._id))
+    })
+    .then(() => {
+      popupAdd.close();
     })
 
     .catch((err) => {
-      if(err) {console.log(err)}
+      if(err) {
+        console.log(err)
+      }
     })
 
     .finally(() => {
-      return api.getData()
-      .then((data) => {
-        cardsGallery.addItem(createCard(data[1][0], data[0]._id))
-        popupAdd.close();
-        renderLoading(false, addCardSubmitButton, "Create");
-      })
+      renderLoading(false, addCardSubmitButton, "Create");
     })
   });
   popupAdd.setEventListeners();
@@ -96,35 +95,43 @@ api.getData()
 const popupWithImage = new PopupWithImage(thisPageSettings, thisPageSettings.popupImageSelector);
 const popupAlert = new PopupWithForm(thisPageSettings, thisPageSettings.popupAlertSelector)
 
-const createCard = (cardObj, myId) => {
-  const newCard = new Card(cardObj, myId, thisPageSettings, () => {
-    popupWithImage.open(newCard._cardImage);
+const createCard = (card, myId) => {
+  const newCard = new Card(card, myId, thisPageSettings, () => {
+    popupWithImage.cardObj = card;
+    popupWithImage.open();
   }, () => {
-    if (newCard._buttonDelete.classList.contains(thisPageSettings.buttonDeleteActiveClass)) {
-      popupAlert._handleSubmit = (evt) => {
+    if (newCard.isOwner()) {
+      popupAlert.handleSubmit = (evt) => {
         evt.preventDefault()
-        api.deleteCard(newCard._cardObj._id)
-        newCard.deleteCard()
-        popupAlert.close()
+        api.deleteCard(newCard.getCardId())
+        .then(() => {
+          newCard.deleteCard()
+        })
+        .then(() => {
+          popupAlert.close()
+        })
+        .catch(err => console.log(err))
       };
       popupAlert.open()
     }
   }, () => {
-    if (!newCard._buttonLike.classList.contains(thisPageSettings.buttonLikeActiveClass)) {
-      api.addLike(newCard._cardObj._id)
-      .then(res => res)
-      .then(values => newCard._likesNumber.textContent = values.likes.length)
-      newCard._buttonLike.classList.add(thisPageSettings.buttonLikeActiveClass)
+    if (!newCard.isLiked()) {
+      api.addLike(newCard.getCardId())
+      .then(value => {
+        newCard.addLike();
+        newCard.updateLikes(value);
+      })
+      .catch(err => console.log(err))
     } else {
-      api.deleteLike(newCard._cardObj._id)
-      .then(res => res)
-      .then(values => newCard._likesNumber.textContent = values.likes.length)
-      newCard._buttonLike.classList.remove(thisPageSettings.buttonLikeActiveClass)
+      api.deleteLike(newCard.getCardId())
+      .then(value => {
+        newCard.removeLike();
+        newCard.updateLikes(value)
+      })
+      .catch(err => console.log(err))
     }
-
   });
   return newCard.generateCard();
-
 };
 
 const popupEditProfile = new PopupWithForm(thisPageSettings,
@@ -134,32 +141,26 @@ thisPageSettings.popupEditProfileSelector,
   renderLoading(true, profileEditSubmitButton)
   const { name, about } = popupEditProfile.getInputValues();
   api.editProfile({ name: name, about: about })
-  .then((res) => {
-    if(res.ok) {
-      res.json()
-    }
-    return Promise.reject(res.statusText)
+  .then((userObj) => {
+    userInfo.setUserInfo({
+      name: userObj.name,
+      about: userObj.about,
+      avatar: userObj.avatar
+     });
   })
+  .then(() => popupEditProfile.close())
 
-  .catch((err) => {
-    if (err) {
-      console.log(err)
-    }
-  })
+  .catch(err => console.log(err))
 
-  .finally(() => {
-    userInfo.setUserInfo({ nameInfo: name, jobInfo: about });
-    renderLoading(false, profileEditSubmitButton, "Save");
-    popupEditProfile.close();
-  })
+  .finally(() => renderLoading(false, profileEditSubmitButton, "Save"))
 });
 popupEditProfile.setEventListeners();
 
 buttonEditProfile.addEventListener("click", () => {
   popupEditProfile.open();
-  const { name, job } = userInfo.getUserInfo()
+  const { name, about } = userInfo.getUserInfo()
   profileNameInput.value = name;
-  profileJobInput.value = job;
+  profileJobInput.value = about;
   profileFormValidator.validateForm();
 });
 
@@ -175,8 +176,7 @@ const popupEditAvatar = new PopupWithForm(thisPageSettings,
 
 buttonEditAvatar.addEventListener("click", () => {
   popupEditAvatar.open();
-  profileAvatarUrlInput.value = profileImage.style.backgroundImage.slice(5, -2)
-  avatarFormValidator.validateForm();
+  avatarFormValidator.resetValidation();
 })
 
 const renderLoading = (isLoading, button, value) => {

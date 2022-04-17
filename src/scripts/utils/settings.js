@@ -43,6 +43,7 @@ export const pageSettings = {
 /// SELECTORS
   userNameSetSelector: ".profile__name",
   userJobSetSelector: ".profile__profession",
+  profileImageSelector: ".profile__image",
   buttonEditProfileSelector: ".edit-button",
   buttonAddCardSelector: ".add-button",
   avatarEditButtonSelector: ".avatar-edit-button",

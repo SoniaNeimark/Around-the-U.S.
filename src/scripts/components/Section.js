@@ -12,6 +12,6 @@ export default class Section {
   }
 
   addItem(element) {
-    element.onload = this._container.prepend(element)
+    this._container.prepend(element)
   }
 }
