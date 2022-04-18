@@ -1,13 +1,14 @@
 .elements__card {
   position: relative;
   width: 282px;
+  height: 367px;
   margin: 0 auto 20px auto;
   display: grid;
   grid-template-columns: auto 39px;
-  grid-template-rows: min-content auto;
+  grid-template-rows: max-content auto;
   grid-template-areas:
   "elements__image elements__image"
-  "elements__title elements__like";
+  "elements__title elements__like-group";
   background: #FFFFFF;
   border-radius: 10px;
   padding: 0;

@@ -3,8 +3,8 @@
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  /*justify-self: center;*/
+  padding-bottom: 23px;
   justify-self: flex-start;
-  align-self: center;
-  grid-area: elements__like;
+  align-self: flex-end;
+  grid-area: elements__like-group;
 }

@@ -8,10 +8,8 @@ import { FormValidator } from "../scripts/components/FormValidator.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js"
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
-import { data } from "autoprefixer";
 const logo = document.getElementById("logo");
 logo.src = logoSrc;
-const profileImage = document.getElementById("profile");
 const thisPageSettings = { ...documentSettings, ...pageSettings, ...validationSettings };
 const buttonEditProfile = document.querySelector(thisPageSettings.buttonEditProfileSelector);
 const buttonAddCard = document.querySelector(thisPageSettings.buttonAddCardSelector);
@@ -31,7 +29,7 @@ const apiOptions = {
   }
 }
 
-const api = new Api(apiOptions);
+const api = new Api(apiOptions)
 const cardAddFormValidator = new FormValidator(thisPageSettings, thisPageSettings.popupAddCardSelector);
 cardAddFormValidator.enableValidation();
 const profileFormValidator = new FormValidator(thisPageSettings, thisPageSettings.popupEditProfileSelector);
@@ -41,11 +39,7 @@ avatarFormValidator.enableValidation();
 
 api.getData()
 .then(([userData, cards]) => {
-  userInfo.setUserInfo({
-    name: userData.name,
-    about: userData.about,
-    avatar: userData.avatar
-  });
+  userInfo.setUserInfo(userData);
 
   const cardsGallery = new Section(cards, (item) => {
     cardsGallery.addItem(createCard(item, userData._id))
@@ -74,11 +68,7 @@ api.getData()
       popupAdd.close();
     })
 
-    .catch((err) => {
-      if(err) {
-        console.log(err)
-      }
-    })
+    .catch(err => console.log(err))
 
     .finally(() => {
       renderLoading(false, addCardSubmitButton, "Create");
@@ -91,6 +81,7 @@ api.getData()
     cardAddFormValidator.resetValidation();
   });
 })
+.catch(err => console.log(err))
 
 const popupWithImage = new PopupWithImage(thisPageSettings, thisPageSettings.popupImageSelector);
 const popupAlert = new PopupWithForm(thisPageSettings, thisPageSettings.popupAlertSelector)
@@ -142,11 +133,7 @@ thisPageSettings.popupEditProfileSelector,
   const { name, about } = popupEditProfile.getInputValues();
   api.editProfile({ name: name, about: about })
   .then((userObj) => {
-    userInfo.setUserInfo({
-      name: userObj.name,
-      about: userObj.about,
-      avatar: userObj.avatar
-     });
+    userInfo.setUserInfo(userObj);
   })
   .then(() => popupEditProfile.close())
 
@@ -171,8 +158,8 @@ const popupEditAvatar = new PopupWithForm(thisPageSettings,
     renderLoading(true, avatarEditSubmitButton)
     const url = popupEditAvatar.getInputValues();
     api.editAvatar(url.avatarUrl)
-    .then(() => {
-      profileImage.style.backgroundImage = `url(${url.avatarUrl})`
+    .then((userObj) => {
+      userInfo.setUserInfo(userObj);
     })
     .then(() => {
       popupEditAvatar.close();
@@ -190,7 +177,7 @@ buttonEditAvatar.addEventListener("click", () => {
 
 const renderLoading = (isLoading, button, value) => {
   if (isLoading) {
-    button.textContent = "Saving"
+    button.textContent = "Saving..."
   } else {
     button.textContent = value
   }
